@@ -50,7 +50,7 @@
                         <p>Program</p>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('admin/periode*') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ Request::is('admin/periode*') ? 'active' : '' }}">
                     <a href="{{ route('periode.data') }}">
                         <i class="fas fa-calendar-alt"></i>
                         <p>Periode</p>
@@ -67,7 +67,7 @@
                         <i class="fas fa-money-check-alt"></i>
                         <p>Pembayaran</p>
                     </a>
-                </li>
+                </li> --}}
                 @if (Auth::user()->level == 'Super Admin')
                 <li class="nav-item {{ Request::is('admin/user*') ? 'active' : '' }}">
                     <a href="{{ route('user.data') }}">

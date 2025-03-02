@@ -46,7 +46,7 @@
             <nav>
                 <div class="logo">
                     <a href='#'>
-                        <img src="{{  url('') }}/assets/logo/logo2.png" alt="Brilliant English Course" height="100">
+                        <img src="{{  url('') }}/assets/logo/logo-nav.png" alt="Brilliant English Course" height="100">
                     </a>
                 </div>                
             </nav>

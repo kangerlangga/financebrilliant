@@ -90,7 +90,7 @@
         <form method="POST" action="{{ route('login.verifikasi') }}" enctype="multipart/form-data">
             @csrf
 
-            <h3 class="text-center mb-4" style="font-family: Roboto;">Login Admin</h3>
+            <h3 class="text-center mb-4" style="font-family: Roboto;">{{ $judul }}</h3>
             <hr>
 
             <div class="form-group">

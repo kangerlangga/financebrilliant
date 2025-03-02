@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>{{ $judul }} | Admin Brilliant English Course</title>
+    <title>{{ $judul }} | Finance Brilliant English Course</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" type="image/png" href="{{  url('') }}/assets/logo/logop.png">
 
