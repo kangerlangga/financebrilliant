@@ -5,6 +5,19 @@
 </head>
 
 @section('content')
+@php
+    use Carbon\Carbon;
+
+    $months = [
+        'January' => 'Januari', 'February' => 'Februari', 'March' => 'Maret',
+        'April' => 'April', 'May' => 'Mei', 'June' => 'Juni',
+        'July' => 'Juli', 'August' => 'Agustus', 'September' => 'September',
+        'October' => 'Oktober', 'November' => 'November', 'December' => 'Desember'
+    ];
+
+    $currentMonth = $months[Carbon::now()->format('F')];
+    $currentYear = Carbon::now()->format('Y');
+@endphp
 <div class="wrapper">
     <div class="main-header">
         @include('layouts.admin.nav')
@@ -28,18 +41,13 @@
                                 <div class="row align-items-center">
                                     <div class="col-icon">
                                         <div class="icon-big text-center icon-info bubble-shadow-small" style="background-color: #404285">
-                                            <i class="flaticon-agenda"></i>
+                                            <i class="flaticon-coins"></i>
                                         </div>
                                     </div>
                                     <div class="col col-stats ml-3 ml-sm-0">
                                         <div class="numbers">
-                                            <p class="card-category">Total Program</p>
-                                            <h4 class="card-title">
-                                            <i class="fas fa-fw fa-solid fa-globe"></i> {{ $jPs }} Item
-                                            @if($jPh > 0)
-                                                | <i class="fas fa-fw fa-solid fa-lock"></i> {{ $jPh }} Item
-                                            @endif
-                                            </h4>
+                                            <p class="card-category">Saldo Saat Ini</p>
+                                            <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -65,59 +73,76 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-4">
+                    <div class="col-sm-6 col-md-6">
                         <div class="card card-stats card-round">
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-icon">
-                                        <div class="icon-big text-center text-white icon-warning bubble-shadow-small">
-                                            <i class="fas fa-clock"></i>
+                                        <div class="icon-big text-center icon-danger bubble-shadow-small">
+                                            <i class="fas fa-upload"></i>
                                         </div>
                                     </div>
                                     <div class="col col-stats ml-3 ml-sm-0">
                                         <div class="numbers">
-                                            <p class="card-category">Transaksi Pending</p>
-                                            <h4 class="card-title"> Item</h4>
+                                            <p class="card-category">Total Pengeluaran ({{ $currentMonth }} {{ $currentYear }})</p>
+                                            <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-4">
+                    <div class="col-sm-6 col-md-6">
                         <div class="card card-stats card-round">
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-icon">
-                                        <div class="icon-big text-center text-white icon-success bubble-shadow-small">
-                                            <i class="fas fa-check-circle"></i>
+                                        <div class="icon-big text-center icon-success bubble-shadow-small">
+                                            <i class="fas fa-download"></i>
                                         </div>
                                     </div>
                                     <div class="col col-stats ml-3 ml-sm-0">
                                         <div class="numbers">
-                                            <p class="card-category">Transaksi Berhasil</p>
-                                            <h4 class="card-title"> Item</h4>
+                                            <p class="card-category">Total Penghasilan ({{ $currentMonth }} {{ $currentYear }})</p>
+                                            <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="card card-stats card-round">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Grafik Pengeluaran</div>
+                            </div>
                             <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center text-white icon-danger bubble-shadow-small">
-                                            <i class="fas fa-times-circle"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats ml-3 ml-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-category">Transaksi Gagal</p>
-                                            <h4 class="card-title"> Item</h4>
-                                        </div>
-                                    </div>
+                                <div class="chart-container">
+                                    <canvas id="keluarChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Grafik Penghasilan</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="masukChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Grafik Saldo</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="saldoChart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -190,6 +215,77 @@
     // updateTime();
 </script>
 @include('layouts.admin.script')
+<script>
+    var keluarChart = document.getElementById('keluarChart').getContext('2d');
+    var masukChart = document.getElementById('masukChart').getContext('2d');
+    var saldoChart = document.getElementById('saldoChart').getContext('2d');
+
+    var myKeluarChart = new Chart(keluarChart, {
+        type: 'bar',
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Pengeluaran",
+                backgroundColor: '#f25961',
+                borderColor: '#f25961',
+                data: [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4],
+            }],
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                y: { 
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var myMasukChart = new Chart(masukChart, {
+        type: 'bar',
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Penghasilan",
+                backgroundColor: '#31ce36',
+                borderColor: '#31ce36',
+                data: [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4],
+            }],
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var mySaldoChart = new Chart(saldoChart, {
+        type: 'bar',
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "Saldo",
+                backgroundColor: '#404285',
+                borderColor: '#404285',
+                data: [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4],
+            }],
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 @endsection
 
 <body>
