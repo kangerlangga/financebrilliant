@@ -114,7 +114,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <div class="card-title">Grafik Pengeluaran</div>
+                                <div class="card-title">Grafik Pengeluaran 6 Bulan Terakhir</div>
                             </div>
                             <div class="card-body">
                                 <div class="chart-container">
@@ -126,7 +126,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <div class="card-title">Grafik Penghasilan</div>
+                                <div class="card-title">Grafik Penghasilan 6 Bulan Terakhir</div>
                             </div>
                             <div class="card-body">
                                 <div class="chart-container">
@@ -138,7 +138,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <div class="card-title">Grafik Saldo</div>
+                                <div class="card-title">Grafik Saldo 12 Bulan Terakhir</div>
                             </div>
                             <div class="card-body">
                                 <div class="chart-container">
@@ -147,6 +147,30 @@
                             </div>
                         </div>
                     </div>
+                    {{-- <div class="col-12">
+                        <div class="card full-height">
+                            <div class="card-body">
+                                <div class="card-title">Total income & spend statistics</div>
+                                <div class="row py-3">
+                                    <div class="col-md-4 d-flex flex-column justify-content-around">
+                                        <div>
+                                            <h6 class="fw-bold text-uppercase text-success op-8">Total Income</h6>
+                                            <h3 class="fw-bold">$9.782</h3>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold text-uppercase text-danger op-8">Total Spend</h6>
+                                            <h3 class="fw-bold">$1,248</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div id="chart-container">
+                                            <canvas id="totalIncomeChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
                     @if (Auth::user()->level == 'Super Admin')
                     <div class="col-md-4">
                         <div class="card text-white" style="background: linear-gradient(to bottom right, #404285, #34356E);">
@@ -179,7 +203,6 @@
             timer: 3000
         });
     @endif
-
     // Client Side
     function updateTime() {
         const timeElement1 = document.getElementById('dynamic-time1');
@@ -193,7 +216,6 @@
     }
     setInterval(updateTime, 1000);
     updateTime();
-
     // Server Side
     // async function updateTime() {
     //     const timeElement1 = document.getElementById('dynamic-time1');
@@ -216,51 +238,93 @@
 </script>
 @include('layouts.admin.script')
 <script>
-    var keluarChart = document.getElementById('keluarChart').getContext('2d');
-    var masukChart = document.getElementById('masukChart').getContext('2d');
-    var saldoChart = document.getElementById('saldoChart').getContext('2d');
+    var keluarChart = document.getElementById('keluarChart').getContext('2d'),
+    masukChart = document.getElementById('masukChart').getContext('2d'),
+    saldoChart = document.getElementById('saldoChart').getContext('2d');
+    // var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
+
+    // var mytotalIncomeChart = new Chart(totalIncomeChart, {
+    //     type: 'bar',
+    //     data: {
+    //         labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
+    //         datasets : [{
+    //             label: "Total Income",
+    //             backgroundColor: '#ff9e27',
+    //             borderColor: 'rgb(23, 125, 255)',
+    //             data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+    //         }],
+    //     },
+    //     options: {
+    //         responsive: true,
+    //         maintainAspectRatio: false,
+    //         legend: {
+    //             display: false,
+    //         },
+    //         scales: {
+    //             yAxes: [{
+    //                 ticks: {
+    //                     display: false //this will remove only the label
+    //                 },
+    //                 gridLines : {
+    //                     drawBorder: false,
+    //                     display : false
+    //                 }
+    //             }],
+    //             xAxes : [ {
+    //                 gridLines : {
+    //                     drawBorder: false,
+    //                     display : false
+    //                 }
+    //             }]
+    //         },
+    //     }
+    // });
 
     var myKeluarChart = new Chart(keluarChart, {
         type: 'bar',
         data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             datasets: [{
                 label: "Pengeluaran",
                 backgroundColor: '#f25961',
                 borderColor: '#f25961',
-                data: [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4],
+                data: [4, 6, 7, 8, 7, 4],
             }],
         },
         options: {
             responsive: true, 
             maintainAspectRatio: false,
             scales: {
-                y: { 
-                    beginAtZero: true
-                }
-            }
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
         }
     });
 
     var myMasukChart = new Chart(masukChart, {
         type: 'bar',
         data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             datasets: [{
                 label: "Penghasilan",
                 backgroundColor: '#31ce36',
                 borderColor: '#31ce36',
-                data: [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4],
+                data: [4, 6, 7, 8, 7, 4],
             }],
         },
         options: {
             responsive: true, 
             maintainAspectRatio: false,
             scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
         }
     });
 
@@ -279,10 +343,12 @@
             responsive: true, 
             maintainAspectRatio: false,
             scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
         }
     });
 </script>
