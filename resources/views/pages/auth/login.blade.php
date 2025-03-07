@@ -109,8 +109,6 @@
 
             <button class="btn btn-block rounded-pill mt-3 pt-2 pb-2 fw-bold text-white" style="font-size: medium;"><b>LOGIN</b></button>
 
-            <p class="mt-3">Back to Home? <a href="{{ url('') }}">Click Here</a></p>
-
         </form>
         </div>
         </section>

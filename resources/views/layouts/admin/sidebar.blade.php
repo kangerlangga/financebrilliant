@@ -38,32 +38,32 @@
                 </div>
             </div>
             <ul class="nav nav-info">
-                <li class="nav-item {{ Request::is('admin') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
                     <a href="{{ route('admin.dash') }}">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('admin/finance*') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('finance*') ? 'active' : '' }}">
                     <a href="{{ route('finance.data') }}">
                         <i class="fas fa-money-check-alt"></i>
                         <p>Keuangan</p>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('admin/employee*') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('employee*') ? 'active' : '' }}">
                     <a href="{{ route('employee.data') }}">
                         <i class="fas fa-users"></i>
                         <p>Karyawan</p>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('admin/program*') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('program*') ? 'active' : '' }}">
                     <a href="{{ route('program.data') }}">
                         <i class="fas fa-school"></i>
                         <p>Program</p>
                     </a>
                 </li>
                 @if (Auth::user()->level == 'Super Admin')
-                <li class="nav-item {{ Request::is('admin/user*') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
                     <a href="{{ route('user.data') }}">
                         <i class="fas fa-user-cog"></i>
                         <p>Akun</p>
