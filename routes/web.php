@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PublikController;
@@ -32,21 +34,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/program/update/{id}', [ProgramController::class, 'update'])->name('program.update');
     Route::get('/admin/program/delete/{id}', [ProgramController::class, 'destroy'])->name('program.delete');
 
-    // Route::get('/admin/periode', [PeriodeController::class, 'index'])->name('periode.data');
-    // Route::get('/admin/periode/add', [PeriodeController::class, 'create'])->name('periode.add');
-    // Route::post('/admin/periode/store', [PeriodeController::class, 'store'])->name('periode.store');
-    // Route::get('/admin/periode/edit/{id}', [PeriodeController::class, 'edit'])->name('periode.edit');
-    // Route::get('/admin/periode/aktif/{id}', [PeriodeController::class, 'aktif'])->name('periode.aktif');
-    // Route::get('/admin/periode/nonaktif/{id}', [PeriodeController::class, 'nonaktif'])->name('periode.nonaktif');
-    // Route::post('/admin/periode/update/{id}', [PeriodeController::class, 'update'])->name('periode.update');
-    // Route::get('/admin/periode/delete/{id}', [PeriodeController::class, 'destroy'])->name('periode.delete');
+    Route::get('/admin/employee', [EmployeeController::class, 'index'])->name('employee.data');
+    Route::get('/admin/employee/add', [EmployeeController::class, 'create'])->name('employee.add');
+    Route::post('/admin/employee/store', [EmployeeController::class, 'store'])->name('employee.store');
+    Route::get('/admin/employee/edit/{id}', [EmployeeController::class, 'edit'])->name('employee.edit');
+    Route::post('/admin/employee/update/{id}', [EmployeeController::class, 'update'])->name('employee.update');
+    Route::get('/admin/employee/delete/{id}', [EmployeeController::class, 'destroy'])->name('employee.delete');
 
-    // Route::get('/admin/order', [OrderController::class, 'index'])->name('order.data');
-    // Route::get('/admin/order/add', [OrderController::class, 'create'])->name('order.add');
-    // Route::post('/admin/order/store', [OrderController::class, 'store'])->name('order.store');
-    // Route::get('/admin/order/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
-    // Route::post('/admin/order/update/{id}', [OrderController::class, 'update'])->name('order.update');
-    // Route::get('/admin/order/delete/{id}', [OrderController::class, 'destroy'])->name('order.delete');
+    Route::get('/admin/finance', [FinanceController::class, 'index'])->name('finance.data');
+    Route::get('/admin/finance/add', [FinanceController::class, 'create'])->name('finance.add');
+    Route::post('/admin/finance/store', [FinanceController::class, 'store'])->name('finance.store');
+    Route::get('/admin/finance/edit/{id}', [FinanceController::class, 'edit'])->name('finance.edit');
+    Route::post('/admin/finance/update/{id}', [FinanceController::class, 'update'])->name('finance.update');
+    Route::get('/admin/finance/delete/{id}', [FinanceController::class, 'destroy'])->name('finance.delete');
 
     // Route::get('/admin/payment', [PaymentController::class, 'index'])->name('payment.data');
     // Route::get('/admin/payment/detail/{id}', [PaymentController::class, 'show'])->name('payment.detail');

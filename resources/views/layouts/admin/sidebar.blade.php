@@ -44,30 +44,24 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                <li class="nav-item {{ Request::is('admin/finance*') ? 'active' : '' }}">
+                    <a href="{{ route('finance.data') }}">
+                        <i class="fas fa-money-check-alt"></i>
+                        <p>Keuangan</p>
+                    </a>
+                </li>
                 <li class="nav-item {{ Request::is('admin/program*') ? 'active' : '' }}">
                     <a href="{{ route('program.data') }}">
                         <i class="fas fa-school"></i>
                         <p>Program</p>
                     </a>
                 </li>
-                {{-- <li class="nav-item {{ Request::is('admin/periode*') ? 'active' : '' }}">
-                    <a href="{{ route('periode.data') }}">
-                        <i class="fas fa-calendar-alt"></i>
-                        <p>Periode</p>
+                <li class="nav-item {{ Request::is('admin/employee*') ? 'active' : '' }}">
+                    <a href="{{ route('employee.data') }}">
+                        <i class="fas fa-users"></i>
+                        <p>Karyawan</p>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('admin/order*') ? 'active' : '' }}">
-                    <a href="{{ route('order.data') }}">
-                        <i class="fas fa-shopping-cart"></i>
-                        <p>Transaksi</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::is('admin/payment*') ? 'active' : '' }}">
-                    <a href="{{ route('payment.data') }}">
-                        <i class="fas fa-money-check-alt"></i>
-                        <p>Pembayaran</p>
-                    </a>
-                </li> --}}
                 @if (Auth::user()->level == 'Super Admin')
                 <li class="nav-item {{ Request::is('admin/user*') ? 'active' : '' }}">
                     <a href="{{ route('user.data') }}">
