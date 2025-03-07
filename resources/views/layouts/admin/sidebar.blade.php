@@ -50,16 +50,16 @@
                         <p>Keuangan</p>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('admin/program*') ? 'active' : '' }}">
-                    <a href="{{ route('program.data') }}">
-                        <i class="fas fa-school"></i>
-                        <p>Program</p>
-                    </a>
-                </li>
                 <li class="nav-item {{ Request::is('admin/employee*') ? 'active' : '' }}">
                     <a href="{{ route('employee.data') }}">
                         <i class="fas fa-users"></i>
                         <p>Karyawan</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ Request::is('admin/program*') ? 'active' : '' }}">
+                    <a href="{{ route('program.data') }}">
+                        <i class="fas fa-school"></i>
+                        <p>Program</p>
                     </a>
                 </li>
                 @if (Auth::user()->level == 'Super Admin')
