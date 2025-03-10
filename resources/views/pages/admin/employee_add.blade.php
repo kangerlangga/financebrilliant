@@ -30,24 +30,33 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                            <form method="POST" action="{{ route('periode.store') }}" enctype="multipart/form-data" id="order_add">
+                            <form method="POST" action="{{ route('employee.store') }}" enctype="multipart/form-data" id="order_add">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label for="category">Kategori</label>
-                                            <select class="form-control" id="category" name="category">
-                                                <option name='category' value='Kelas Offline'>Kelas Offline</option>
-                                                <option name='category' value='Kelas Online'>Kelas Online</option>
-                                                <option name='category' value='Kelas Offline + Holiday'>Kelas Offline + Holiday</option>
-                                                <option name='category' value='Paket Liburan (Khusus Member)'>Paket Liburan (Khusus Member)</option>
-                                            </select>
+                                    <div class="col-sm-6">
+                                        <div class="form-group @error('NIP') has-error has-feedback @enderror">
+                                            <label for="NIP">Nomor Induk Karyawan</label>
+                                            <input type="text" id="NIP" name="NIP" value="{{ old('NIP') }}" class="form-control" placeholder="Masukkan Nomor Induk" required>
+                                            @error('NIP')
+                                            <small id="NIP" class="form-text text-muted">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group @error('Nama') has-error has-feedback @enderror">
+                                            <label for="Nama">Nama Karyawan</label>
+                                            <input type="text" id="Nama" name="Nama" value="{{ old('Nama') }}" class="form-control" placeholder="Masukkan Nama" required>
+                                            @error('Nama')
+                                            <small id="Nama" class="form-text text-muted">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="DateP">Tanggal</label>
-                                            <input type="date" class="form-control" id="DateP" name="DateP" min="{{ date('Y-m-d') }}" required>
+                                            <label for="Position">Jabatan Karyawan</label>
+                                            <select class="form-control" id="Position" name="Position">
+                                                <option name='Position' value='Marketing'>Marketing</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">

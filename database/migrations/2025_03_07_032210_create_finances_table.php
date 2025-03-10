@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('finances', function (Blueprint $table) {
-            $table->uuid('id_finances')->default(DB::raw('UUID()'))->primary();
+            $table->uuid('id_finances')->primary();
             $table->string('noted_finances');
             $table->date('date_finances');
             $table->bigInteger('out_finances');

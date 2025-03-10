@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class EmployeeController extends Controller
 {
@@ -12,7 +14,11 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'judul' => 'Manajemen Karyawan',
+            'DataK' => Employee::latest()->get(),
+        ];
+        return view('pages.admin.employee', $data);
     }
 
     /**
@@ -20,7 +26,10 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'judul' => 'Tambah Karyawan',
+        ];
+        return view('pages.admin.employee_add', $data);
     }
 
     /**
@@ -28,7 +37,22 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Nama'  => 'required|max:255',
+            'NIP'   => 'required|max:255',
+        ]);
+
+        Employee::create([
+            'id_employees'          => 'Employee'.Str::random(33),
+            'nip_employees'         => $request->NIP,
+            'name_employees'        => $request->Nama,
+            'position_employees'    => $request->Position,
+            'status_employees'      => $request->status,
+            'created_by'            => Auth::user()->email,
+            'modified_by'           => Auth::user()->email
+        ]);
+
+        return redirect()->route('employee.add')->with(['success' => 'Karyawan telah Ditambahkan!']);
     }
 
     /**
@@ -45,6 +69,36 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         //
+    }
+
+    public function aktif(string $id)
+    {
+        //get by ID
+        $employee = Employee::findOrFail($id);
+
+        //aktifkan
+        $employee->update([
+            'status_employees'   => 'Aktif',
+            'modified_by'       => Auth::user()->email,
+        ]);
+
+        //redirect
+        return redirect()->route('employee.data')->with(['success' => 'Karyawan telah Di Aktifkan!']);
+    }
+
+    public function nonaktif(string $id)
+    {
+        //get by ID
+        $employee = Employee::findOrFail($id);
+
+        //nonaktifkan
+        $employee->update([
+            'status_employees'   => 'Nonaktif',
+            'modified_by'       => Auth::user()->email,
+        ]);
+
+        //redirect
+        return redirect()->route('employee.data')->with(['success' => 'Karyawan telah Di Nonaktifkan!']);
     }
 
     /**

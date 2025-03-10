@@ -30,9 +30,9 @@
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
                     <ul class="breadcrumbs">
-                        <a href="{{ route('periode.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
+                        <a href="{{ route('employee.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
                             <i class="fa fa-plus-circle mr-1"></i>
-                            Tambah Periode
+                            Tambah Karyawan
                         </a>
                     </ul>
                 </div>
@@ -40,41 +40,41 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tabel Periode</h4>
+                                <h4 class="card-title">Tabel Karyawan</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="basic-datatables" class="display table table-striped table-hover" >
+                                    <table id="tabel-karyawan" class="display table table-striped table-hover" >
                                         <thead>
                                             <tr>
-                                                <th>Periode</th>
-                                                <th>Kategori</th>
-                                                <th>Status</th>
+                                                <th>NIP</th>
+                                                <th>Nama</th>
+                                                <th>Jabatan</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($DataP as $P)
+                                            @foreach ($DataK as $K)
                                             <tr>
-                                                <td>{{ \Carbon\Carbon::parse($P->date_periodes)->locale('id')->translatedFormat('Y-m-d (l)') }}</td>
-                                                <td>{{ $P->category_periodes }}</td>
-                                                <td class="{{ $P->status_periodes == 'Aktif' ? 'text-success' : 'text-danger' }}">{{ $P->status_periodes }}</td>
+                                                <td>{{ $K->nip_employees }}</td>
+                                                <td>{{ $K->name_employees }}</td>
+                                                <td class="{{ $K->status_employees == 'Aktif' ? 'text-success' : 'text-danger' }}">{{ $K->status_employees }}</td>
                                                 <td>
                                                     <div class="form-button-action">
-                                                        @if ($P->status_periodes == 'Aktif')
-                                                        <a href="{{ route('periode.nonaktif', $P->id_periodes) }}">
+                                                        @if ($K->status_employees == 'Aktif')
+                                                        <a href="{{ route('employee.nonaktif', $K->id_employees) }}">
                                                             <button type="button" data-toggle="tooltip" class="btn btn-link btn-primary btn-lg" data-original-title="Nonaktifkan">
                                                                 <i class="fas fa-toggle-off"></i>
                                                             </button>
                                                         </a>
-                                                        @elseif ($P->status_periodes == 'Nonaktif')
-                                                        <a href="{{ route('periode.aktif', $P->id_periodes) }}">
+                                                        @elseif ($K->status_employees == 'Nonaktif')
+                                                        <a href="{{ route('employee.aktif', $K->id_employees) }}">
                                                             <button type="button" data-toggle="tooltip" class="btn btn-link btn-primary btn-lg" data-original-title="Aktifkan">
                                                                 <i class="fas fa-toggle-on"></i>
                                                             </button>
                                                         </a>
                                                         @endif
-                                                        <a href="{{ route('periode.delete', $P->id_periodes) }}" class="but-delete">
+                                                        <a href="{{ route('employee.delete', $K->id_employees) }}" class="but-delete">
                                                             <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
@@ -98,7 +98,7 @@
 @include('layouts.admin.script')
 <script>
     $(document).ready(function() {
-       $('#basic-datatables').DataTable({
+       $('#tabel-karyawan').DataTable({
             "columnDefs": [
                 {
                     "targets": [0],

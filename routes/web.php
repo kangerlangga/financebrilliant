@@ -34,6 +34,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/employee/add', [EmployeeController::class, 'create'])->name('employee.add');
     Route::post('/employee/store', [EmployeeController::class, 'store'])->name('employee.store');
     Route::get('/employee/edit/{id}', [EmployeeController::class, 'edit'])->name('employee.edit');
+    Route::get('/employee/aktif/{id}', [EmployeeController::class, 'aktif'])->name('employee.aktif');
+    Route::get('/employee/nonaktif/{id}', [EmployeeController::class, 'nonaktif'])->name('employee.nonaktif');
     Route::post('/employee/update/{id}', [EmployeeController::class, 'update'])->name('employee.update');
     Route::get('/employee/delete/{id}', [EmployeeController::class, 'destroy'])->name('employee.delete');
 
