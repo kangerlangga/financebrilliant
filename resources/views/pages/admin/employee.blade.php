@@ -29,12 +29,14 @@
             <div class="page-inner">
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
+                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
                     <ul class="breadcrumbs">
                         <a href="{{ route('employee.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
                             <i class="fa fa-plus-circle mr-1"></i>
                             Tambah Karyawan
                         </a>
                     </ul>
+                    @endif
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -49,8 +51,14 @@
                                             <tr>
                                                 <th>NIP</th>
                                                 <th>Nama</th>
-                                                <th>Jabatan</th>
-                                                <th>Aksi</th>
+                                                <th>Status</th>
+                                                <th>
+                                                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
+                                                    Aksi
+                                                    @else
+                                                    Jabatan
+                                                    @endif
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -60,6 +68,7 @@
                                                 <td>{{ $K->name_employees }}</td>
                                                 <td class="{{ $K->status_employees == 'Aktif' ? 'text-success' : 'text-danger' }}">{{ $K->status_employees }}</td>
                                                 <td>
+                                                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
                                                     <div class="form-button-action">
                                                         @if ($K->status_employees == 'Aktif')
                                                         <a href="{{ route('employee.nonaktif', $K->id_employees) }}">
@@ -75,11 +84,41 @@
                                                         </a>
                                                         @endif
                                                         <a href="{{ route('employee.delete', $K->id_employees) }}" class="but-delete">
-                                                            <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
+                                                            <button type="button" data-toggle="tooltip" class="btn btn-link btn-danger" data-original-title="Hapus">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
                                                         </a>
+                                                        @if (Auth::user()->level == 'Super Admin')
+                                                            <!-- Button trigger modal -->
+                                                            <button type="button" class="btn btn-link btn-success" data-original-title="Riwayat" data-toggle="modal" data-target="#{{ $K->id_employees }}">
+                                                                <i class="fas fa-history"></i>
+                                                            </button>
+
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="{{ $K->id_employees }}" tabindex="-1" role="dialog" aria-labelledby="{{ $K->id_employees }}Label" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content" style="color: black">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="{{ $K->id_employees }}Label"><b>Activity History</b></h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body" style="text-align: left;">
+                                                                            <p>Created : <br>{{ $K->created_by }} <b>({{ $K->created_at }})</b></p>
+                                                                            <p>Last Modified : <br>{{ $K->modified_by }} <b>({{ $K->updated_at }})</b></p>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </div>
+                                                    @else
+                                                    {{ $K->position_employees }}
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach

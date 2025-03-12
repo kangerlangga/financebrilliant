@@ -80,6 +80,7 @@
                                         <div class="form-group">
                                             <label for="Level">Level Akun</label>
                                             <select class="form-control" id="Level" name="Level">
+                                                <option name='Level' value='Read-Only' {{ $EditUser->level == 'Read-Only' ? 'selected' : '' }}>Read-Only</option>
                                                 <option name='Level' value='Admin' {{ $EditUser->level == 'Admin' ? 'selected' : '' }}>Admin</option>
                                                 <option name='Level' value='Super Admin' {{ $EditUser->level == 'Super Admin' ? 'selected' : '' }}>Super Admin</option>
                                             </select>

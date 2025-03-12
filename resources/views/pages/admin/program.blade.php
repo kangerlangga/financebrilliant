@@ -38,11 +38,13 @@
             <div class="page-inner">
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
+                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
                     <ul class="breadcrumbs">
                         <a href="{{ route('program.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
                             <i class="fa fa-plus-circle mr-1"></i>
                             Program Baru
                         </a>
+                        @endif
                     </ul>
                 </div>
                 <div class="row">
@@ -68,6 +70,7 @@
                                     <li>{{ $bp }}</li>
                                 @endforeach
                             </ul>
+                            @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
                             <a href="{{ route('program.edit', $P->id_programs) }}">
                                 <button type="button" class="btn btn-icon btn-round btn-warning">
                                     <i class="fas fa-pen"></i>
@@ -78,6 +81,7 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </a>
+                            @endif
                             @if (Auth::user()->level == 'Super Admin')
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-icon btn-round btn-success" data-toggle="modal" data-target="#{{ $P->id_programs }}">
