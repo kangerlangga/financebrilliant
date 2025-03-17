@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pemasukans', function (Blueprint $table) {
-            $table->id();
+            $table->string('id_pemasukans')->primary();
+            $table->bigInteger('nominal_pemasukans');
+            $table->string('category_pemasukans');
+            $table->string('program')->nullable();
+            $table->string('noted')->nullable();
+            $table->string('created_by');
+            $table->string('modified_by');
             $table->timestamps();
         });
     }

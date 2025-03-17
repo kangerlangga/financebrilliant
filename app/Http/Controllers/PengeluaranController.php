@@ -12,7 +12,11 @@ class PengeluaranController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'judul' => 'Data Pengeluaran',
+            'DataOut' => Pengeluaran::latest()->get(),
+        ];
+        return view('pages.admin.out', $data);
     }
 
     /**

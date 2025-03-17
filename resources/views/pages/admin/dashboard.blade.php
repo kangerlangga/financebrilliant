@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="col col-stats ml-3 ml-sm-0">
                                         <div class="numbers">
-                                            <p class="card-category">Total Penghasilan ({{ $currentMonth }} {{ $currentYear }})</p>
+                                            <p class="card-category">Total Pemasukan ({{ $currentMonth }} {{ $currentYear }})</p>
                                             <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
                                         </div>
                                     </div>
@@ -124,7 +124,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <div class="card-title">Grafik Penghasilan 6 Bulan Terakhir</div>
+                                <div class="card-title">Grafik Pemasukan 6 Bulan Terakhir</div>
                             </div>
                             <div class="card-body">
                                 <div class="chart-container">
@@ -307,7 +307,7 @@
         data: {
             labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             datasets: [{
-                label: "Penghasilan",
+                label: "Pemasukan",
                 backgroundColor: '#31ce36',
                 borderColor: '#31ce36',
                 data: [4, 6, 7, 8, 7, 4],

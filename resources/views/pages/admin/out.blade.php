@@ -29,21 +29,29 @@
             <div class="page-inner">
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
+                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
+                    <ul class="breadcrumbs">
+                        <a href="{{ route('out.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
+                            <i class="fa fa-plus-circle mr-1"></i>
+                            Tambah Pengeluaran
+                        </a>
+                    </ul>
+                    @endif
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="tabel-saldo" class="display table table-striped table-hover" >
+                                    <table id="tabel-pengeluaran" class="display table table-striped table-hover" >
                                         <thead>
                                             <tr>
                                                 <th>Waktu</th>
-                                                <th>Saldo Awal</th>
-                                                <th>Pemasukan/Pengeluaran</th>
-                                                <th>Saldo Akhir</th>
+                                                <th>Nominal</th>
+                                                <th>Kategori</th>
+                                                <th>Karyawan Terkait</th>
                                                 <th>
-                                                    @if (Auth::user()->level == 'Super Admin')
+                                                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
                                                     Aksi
                                                     @else
                                                     Keterangan
@@ -52,33 +60,33 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($DataS as $S)
+                                            @foreach ($DataOut as $O)
                                             <tr>
-                                                <td>{{ $S->created_at }}</td>
-                                                <td>Rp {{ number_format($S->saldo_awal, 0, ',', '.') }}</td>
-                                                <td class="{{ $S->noted == 'Pemasukan' ? 'text-success' : 'text-danger' }}">Rp {{ number_format($S->out_in, 0, ',', '.') }}</td>
-                                                <td>Rp {{ number_format($S->saldo_akhir, 0, ',', '.') }}</td>
-                                                @if (Auth::user()->level == 'Super Admin')
+                                                <td>{{ $O->created_at }}</td>
+                                                <td class="text-danger">Rp {{ number_format($O->nominal_pengeluaran, 0, ',', '.') }}</td>
+                                                <td>{{ $O->category_pengeluarans }}</td>
+                                                <td>{{ $O->karyawan ?? '-' }}</td>
+                                                @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
                                                 <td>
                                                     <div class="form-button-action">
                                                         <!-- Button trigger modal -->
-                                                        <button type="button" class="btn btn-link btn-success" data-original-title="Riwayat" data-toggle="modal" data-target="#{{ $S->id_finances }}">
+                                                        <button type="button" class="btn btn-link btn-success" data-original-title="Riwayat" data-toggle="modal" data-target="#{{ $O->id_pengeluarans }}">
                                                             <i class="fas fa-history"></i>
                                                         </button>
 
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="{{ $S->id_finances }}" tabindex="-1" role="dialog" aria-labelledby="{{ $S->id_finances }}Label" aria-hidden="true">
+                                                        <div class="modal fade" id="{{ $O->id_pengeluarans }}" tabindex="-1" role="dialog" aria-labelledby="{{ $O->id_pengeluarans }}Label" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content" style="color: black">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="{{ $S->id_finances }}Label"><b>Activity History</b></h5>
+                                                                        <h5 class="modal-title" id="{{ $O->id_pengeluarans }}Label"><b>Activity History</b></h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body" style="text-align: left;">
-                                                                        <p>Created : <br>{{ $S->created_by }} <b>({{ $S->created_at }})</b></p>
-                                                                        <p>Last Modified : <br>{{ $S->modified_by }} <b>({{ $S->updated_at }})</b></p>
+                                                                        <p>Created : <br>{{ $O->created_by }} <b>({{ $O->created_at }})</b></p>
+                                                                        <p>Last Modified : <br>{{ $O->modified_by }} <b>({{ $O->updated_at }})</b></p>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -89,7 +97,7 @@
                                                     </div>
                                                 </td>
                                                 @else
-                                                <td class="{{ $S->noted == 'Pemasukan' ? 'text-success' : 'text-danger' }}">{{ $S->noted }}</td>
+                                                <td>{{ $O->noted ?? '-' }}</td>
                                                 @endif
                                             </tr>
                                             @endforeach
@@ -108,7 +116,7 @@
 @include('layouts.admin.script')
 <script>
     $(document).ready(function() {
-       $('#tabel-saldo').DataTable({
+       $('#tabel-pengeluaran').DataTable({
             "columnDefs": [
                 {
                     "targets": [0],

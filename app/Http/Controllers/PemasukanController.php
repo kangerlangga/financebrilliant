@@ -12,7 +12,11 @@ class PemasukanController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'judul' => 'Data Pemasukan',
+            'DataIn' => Pemasukan::latest()->get(),
+        ];
+        return view('pages.admin.in', $data);
     }
 
     /**
