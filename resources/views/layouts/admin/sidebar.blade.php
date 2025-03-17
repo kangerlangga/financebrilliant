@@ -44,10 +44,22 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('finance*') ? 'active' : '' }}">
-                    <a href="{{ route('finance.data') }}">
+                <li class="nav-item {{ Request::is('out*') ? 'active' : '' }}">
+                    <a href="{{ route('out.data') }}">
+                        <i class="fas fa-upload"></i>
+                        <p>Pengeluaran</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ Request::is('in*') ? 'active' : '' }}">
+                    <a href="{{ route('in.data') }}">
+                        <i class="fas fa-download"></i>
+                        <p>Pemasukan</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ Request::is('saldo*') ? 'active' : '' }}">
+                    <a href="{{ route('saldo.data') }}">
                         <i class="fas fa-money-check-alt"></i>
-                        <p>Keuangan</p>
+                        <p>Saldo</p>
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('employee*') ? 'active' : '' }}">

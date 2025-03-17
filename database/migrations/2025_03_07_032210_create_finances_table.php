@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('finances', function (Blueprint $table) {
-            $table->uuid('id_finances')->primary();
-            $table->string('noted_finances');
-            $table->date('date_finances');
-            $table->bigInteger('out_finances');
-            $table->bigInteger('in_finances');
-            $table->bigInteger('saldo_finances');
+            $table->string('id_finances')->primary();
+            $table->bigInteger('saldo_awal');
+            $table->bigInteger('out_in');
+            $table->bigInteger('saldo_akhir');
+            $table->string('noted');
             $table->string('created_by');
             $table->string('modified_by');
             $table->timestamps();

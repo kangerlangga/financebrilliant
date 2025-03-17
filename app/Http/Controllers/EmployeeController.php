@@ -78,7 +78,7 @@ class EmployeeController extends Controller
 
         //aktifkan
         $employee->update([
-            'status_employees'   => 'Aktif',
+            'status_employees'  => 'Aktif',
             'modified_by'       => Auth::user()->email,
         ]);
 
@@ -93,7 +93,7 @@ class EmployeeController extends Controller
 
         //nonaktifkan
         $employee->update([
-            'status_employees'   => 'Nonaktif',
+            'status_employees'  => 'Nonaktif',
             'modified_by'       => Auth::user()->email,
         ]);
 
