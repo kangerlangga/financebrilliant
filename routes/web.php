@@ -56,11 +56,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/out/delete/{id}', [PengeluaranController::class, 'destroy'])->name('out.delete');
 
     Route::get('/saldo', [FinanceController::class, 'index'])->name('saldo.data');
-    Route::get('/saldo/add', [FinanceController::class, 'create'])->name('saldo.add');
-    Route::post('/saldo/store', [FinanceController::class, 'store'])->name('saldo.store');
-    Route::get('/saldo/edit/{id}', [FinanceController::class, 'edit'])->name('saldo.edit');
-    Route::post('/saldo/update/{id}', [FinanceController::class, 'update'])->name('saldo.update');
-    Route::get('/saldo/delete/{id}', [FinanceController::class, 'destroy'])->name('saldo.delete');
+    // Route::get('/saldo/add', [FinanceController::class, 'create'])->name('saldo.add');
+    // Route::post('/saldo/store', [FinanceController::class, 'store'])->name('saldo.store');
+    // Route::get('/saldo/edit/{id}', [FinanceController::class, 'edit'])->name('saldo.edit');
+    // Route::post('/saldo/update/{id}', [FinanceController::class, 'update'])->name('saldo.update');
+    // Route::get('/saldo/delete/{id}', [FinanceController::class, 'destroy'])->name('saldo.delete');
 
     Route::get('/user', [UserController::class, 'index'])->name('user.data');
     Route::get('/user/add', [UserController::class, 'create'])->name('user.add');

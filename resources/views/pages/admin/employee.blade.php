@@ -168,7 +168,6 @@
         });
     });
 
-    //message with sweetalert
     @if(session('success'))
     Swal.fire({
         icon: "success",

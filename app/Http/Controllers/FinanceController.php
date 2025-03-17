@@ -12,7 +12,11 @@ class FinanceController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'judul' => 'Riwayat Saldo',
+            'DataS' => Finance::latest()->get(),
+        ];
+        return view('pages.admin.saldo', $data);
     }
 
     /**
