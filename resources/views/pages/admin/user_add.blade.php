@@ -82,9 +82,10 @@
                                         <div class="form-group">
                                             <label for="Level">Level Akun</label>
                                             <select class="form-control" id="Level" name="Level">
-                                                <option name='Level' value='Read-Only'>Read-Only</option>
-                                                <option name='Level' value='Admin'>Admin</option>
-                                                <option name='Level' value='Super Admin'>Super Admin</option>
+                                                <option name='Level' value='Marketing'>Marketing</option>
+                                                <option name='Level' value='Frontliner'>Frontliner</option>
+                                                <option name='Level' value='Finance'>Finance</option>
+                                                <option name='Level' value='Super-User'>Super-User</option>
                                             </select>
                                         </div>
                                     </div>
