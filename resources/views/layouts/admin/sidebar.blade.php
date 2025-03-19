@@ -44,6 +44,29 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                @if (Auth::user()->level == 'Marketing' || Auth::user()->level == 'Super-User')
+                <li class="nav-item {{ Request::is('employee*') ? 'active' : '' }}">
+                    <a href="{{ route('employee.data') }}">
+                        <i class="fas fa-users"></i>
+                        <p>Pendaftaran</p>
+                    </a>
+                </li>
+                @endif
+                @if (Auth::user()->level == 'Frontliner' || Auth::user()->level == 'Super-User')
+                <li class="nav-item {{ Request::is('employee*') ? 'active' : '' }}">
+                    <a href="{{ route('employee.data') }}">
+                        <i class="fas fa-id-card"></i>
+                        <p>Verifikasi</p>
+                    </a>
+                </li>
+                @endif
+                <li class="nav-item {{ Request::is('program*') ? 'active' : '' }}">
+                    <a href="{{ route('program.data') }}">
+                        <i class="fas fa-school"></i>
+                        <p>Program</p>
+                    </a>
+                </li>
+                @if (Auth::user()->level == 'Super-User' || Auth::user()->level == 'Finance')
                 <li class="nav-item {{ Request::is('out*') ? 'active' : '' }}">
                     <a href="{{ route('out.data') }}">
                         <i class="fas fa-upload"></i>
@@ -62,18 +85,7 @@
                         <p>Saldo</p>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('employee*') ? 'active' : '' }}">
-                    <a href="{{ route('employee.data') }}">
-                        <i class="fas fa-users"></i>
-                        <p>Karyawan</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::is('program*') ? 'active' : '' }}">
-                    <a href="{{ route('program.data') }}">
-                        <i class="fas fa-school"></i>
-                        <p>Program</p>
-                    </a>
-                </li>
+                @endif
                 @if (Auth::user()->level == 'Super-User')
                 <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
                     <a href="{{ route('user.data') }}">

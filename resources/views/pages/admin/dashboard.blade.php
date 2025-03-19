@@ -39,13 +39,22 @@
                                 <div class="row align-items-center">
                                     <div class="col-icon">
                                         <div class="icon-big text-center icon-info bubble-shadow-small" style="background-color: #404285">
+                                            @if (Auth::user()->level == 'Marketing' || Auth::user()->level == 'Frontliner')
+                                            <i class="flaticon-users"></i>
+                                            @elseif (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
                                             <i class="flaticon-coins"></i>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col col-stats ml-3 ml-sm-0">
                                         <div class="numbers">
+                                            @if (Auth::user()->level == 'Marketing' || Auth::user()->level == 'Frontliner')
+                                            <p class="card-category">Total Pendaftar ({{ $currentMonth }} {{ $currentYear }})</p>
+                                            <h4 class="card-title">50 Siswa</h4>
+                                            @elseif (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
                                             <p class="card-category">Saldo Saat Ini</p>
                                             <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -77,13 +86,27 @@
                                 <div class="row align-items-center">
                                     <div class="col-icon">
                                         <div class="icon-big text-center icon-danger bubble-shadow-small">
+                                            @if (Auth::user()->level == 'Marketing')
+                                            <i class="fas fa-clock"></i>
+                                            @elseif (Auth::user()->level == 'Frontliner')
+                                            <i class="fas fa-user-clock"></i>
+                                            @elseif (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
                                             <i class="fas fa-upload"></i>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col col-stats ml-3 ml-sm-0">
                                         <div class="numbers">
+                                            @if (Auth::user()->level == 'Marketing')
+                                            <p class="card-category">Belum Klaim ({{ $currentMonth }} {{ $currentYear }})</p>
+                                            <h4 class="card-title">35 Siswa</h4>
+                                            @elseif (Auth::user()->level == 'Frontliner')
+                                            <p class="card-category">Belum Verifikasi ({{ $currentMonth }} {{ $currentYear }})</p>
+                                            <h4 class="card-title">15 Siswa</h4>
+                                            @elseif (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
                                             <p class="card-category">Total Pengeluaran ({{ $currentMonth }} {{ $currentYear }})</p>
                                             <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -96,19 +119,34 @@
                                 <div class="row align-items-center">
                                     <div class="col-icon">
                                         <div class="icon-big text-center icon-success bubble-shadow-small">
+                                            @if (Auth::user()->level == 'Marketing')
+                                            <i class="fas fa-check-circle"></i>
+                                            @elseif (Auth::user()->level == 'Frontliner')
+                                            <i class="fas fa-user-check"></i>
+                                            @elseif (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
                                             <i class="fas fa-download"></i>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col col-stats ml-3 ml-sm-0">
                                         <div class="numbers">
+                                            @if (Auth::user()->level == 'Marketing')
+                                            <p class="card-category">Sudah Klaim ({{ $currentMonth }} {{ $currentYear }})</p>
+                                            <h4 class="card-title">15 Siswa</h4>
+                                            @elseif (Auth::user()->level == 'Frontliner')
+                                            <p class="card-category">Sudah Verifikasi ({{ $currentMonth }} {{ $currentYear }})</p>
+                                            <h4 class="card-title">35 Siswa</h4>
+                                            @elseif (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
                                             <p class="card-category">Total Pemasukan ({{ $currentMonth }} {{ $currentYear }})</p>
                                             <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @if (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
@@ -145,6 +183,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     @if (Auth::user()->level == 'Super-User')
                     <div class="col-md-4">
                         <div class="card text-white" style="background: linear-gradient(to bottom right, #404285, #34356E);">
@@ -211,6 +250,7 @@
     // updateTime();
 </script>
 @include('layouts.admin.script')
+@if (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
 <script>
     var keluarChart = document.getElementById('keluarChart').getContext('2d'),
     masukChart = document.getElementById('masukChart').getContext('2d'),
@@ -326,6 +366,7 @@
         }
     });
 </script>
+@endif
 @endsection
 
 <body>
