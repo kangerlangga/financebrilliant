@@ -43,7 +43,7 @@
                                                 <th>Pemasukan/Pengeluaran</th>
                                                 <th>Saldo Akhir</th>
                                                 <th>
-                                                    @if (Auth::user()->level == 'Super Admin')
+                                                    @if (Auth::user()->level == 'Super-User')
                                                     Aksi
                                                     @else
                                                     Keterangan
@@ -58,7 +58,7 @@
                                                 <td>Rp {{ number_format($S->saldo_awal, 0, ',', '.') }}</td>
                                                 <td class="{{ $S->noted == 'Pemasukan' ? 'text-success' : 'text-danger' }}">Rp {{ number_format($S->out_in, 0, ',', '.') }}</td>
                                                 <td>Rp {{ number_format($S->saldo_akhir, 0, ',', '.') }}</td>
-                                                @if (Auth::user()->level == 'Super Admin')
+                                                @if (Auth::user()->level == 'Super-User')
                                                 <td>
                                                     <div class="form-button-action">
                                                         <!-- Button trigger modal -->

@@ -29,7 +29,7 @@
     <nav class="navbar navbar-header navbar-expand-lg" style="background-color: #404285">
         <div class="container-fluid">
         <!-- Running Text -->
-        <marquee behavior="" direction="" class="text-white mr-3">Selamat datang di <b>Brilliant English Course Finance Panel</b> - Kelola transaksi keuangan masuk dan keluar dengan mudah, transparan, dan efisien untuk mendukung kelancaran operasional dan layanan terbaik!</marquee>
+        <marquee behavior="" direction="" class="text-white mr-3">Selamat datang di <b>Brilliant Management System</b> – Platform terintegrasi untuk mengelola pesanan, transaksi keuangan, dan validasi operasional dengan mudah, transparan, dan efisien guna mendukung kelancaran bisnis serta pelayanan terbaik!</marquee>
             <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                 <li class="nav-item dropdown hidden-caret">
                     <a class="nav-link rounded bg-danger" href="#" onclick="confirmLogout()">

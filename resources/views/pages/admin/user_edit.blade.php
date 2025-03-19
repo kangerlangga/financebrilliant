@@ -79,10 +79,11 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="Level">Level Akun</label>
-                                            <select class="form-control" id="Level" name="Level">
-                                                <option name='Level' value='Read-Only' {{ $EditUser->level == 'Read-Only' ? 'selected' : '' }}>Read-Only</option>
-                                                <option name='Level' value='Admin' {{ $EditUser->level == 'Admin' ? 'selected' : '' }}>Admin</option>
-                                                <option name='Level' value='Super Admin' {{ $EditUser->level == 'Super Admin' ? 'selected' : '' }}>Super Admin</option>
+                                            <select class="form-control" id="Level" name="Level" onchange="updatePosition()">
+                                                <option value='Marketing' {{ $EditUser->level == 'Marketing' ? 'selected' : '' }}>Marketing</option>
+                                                <option value='Frontliner' {{ $EditUser->level == 'Frontliner' ? 'selected' : '' }}>Frontliner</option>
+                                                <option value='Finance' {{ $EditUser->level == 'Finance' ? 'selected' : '' }}>Finance</option>
+                                                <option value='Super-User' {{ $EditUser->level == 'Super-User' ? 'selected' : '' }}>Super-User</option>
                                             </select>
                                         </div>
                                     </div>
@@ -109,6 +110,24 @@
 </div>
 @include('layouts.admin.script')
 <script type="text/javascript">
+    function updatePosition() {
+        let level = document.getElementById("Level").value;
+        let positionInput = document.getElementById("Position");
+        if (level === "Super-User") {
+            positionInput.readOnly = false;
+            positionInput.style.cursor = "text";
+            positionInput.value = "";
+        } else {
+            positionInput.readOnly = true;
+            positionInput.style.cursor = "not-allowed";
+            positionInput.value = level;
+        }
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        updatePosition();
+    });
+
     $(document).on('click','.but-back',function(e) {
 
         e.preventDefault();

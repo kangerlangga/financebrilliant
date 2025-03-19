@@ -30,8 +30,8 @@
     <meta NAME="Rating" CONTENT="General">
 
     <!-- WEBSITE META -->
-    <title>{{ $judul }} | Brilliant English Course</title>
-    <link rel="icon" type="image/png" href="{{  url('') }}/assets/logo/logo.png">
+    <title>{{ $judul }} | Brilliant Management System</title>
+    <link rel="icon" type="image/png" href="{{  url('') }}/assets/logo/logop.png">
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -90,7 +90,7 @@
         <form method="POST" action="{{ route('login.verifikasi') }}" enctype="multipart/form-data">
             @csrf
 
-            <h3 class="text-center mb-4" style="font-family: Roboto;">{{ $judul }}</h3>
+            <h3 class="text-center mb-4" style="font-family: Roboto;">Brilliant Management System</h3>
             <hr>
 
             <div class="form-group">
@@ -189,7 +189,6 @@
     @enderror
 
 </script>
-<!-- Template Main JS File -->
 <script src="{{  url('') }}/assets/public/js/main2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 

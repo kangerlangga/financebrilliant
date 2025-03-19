@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="container-fluid">
         <div class="copyright ml-auto">
-            Copyright &copy; <?= date("Y")?> by <a href="{{  url('') }}" target="_blank">Finance Brilliant English Course</a>
+            Copyright &copy; <?= date("Y")?> by <a href="{{  url('') }}" target="_blank">Brilliant Management System</a>
         </div>
     </div>
 </footer>

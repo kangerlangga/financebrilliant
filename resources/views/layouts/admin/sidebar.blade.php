@@ -74,7 +74,7 @@
                         <p>Program</p>
                     </a>
                 </li>
-                @if (Auth::user()->level == 'Super Admin')
+                @if (Auth::user()->level == 'Super-User')
                 <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
                     <a href="{{ route('user.data') }}">
                         <i class="fas fa-user-cog"></i>

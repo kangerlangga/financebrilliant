@@ -68,7 +68,7 @@
                                                 <i class="fas fa-undo-alt"></i>
                                             </button>
                                         </a>
-                                        @if (Auth::user()->level == 'Super Admin')
+                                        @if (Auth::user()->level == 'Super-User')
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-icon btn-round btn-success" data-toggle="modal" data-target="#{{ $U->id_akun }}">
                                                 <i class="fas fa-history"></i>

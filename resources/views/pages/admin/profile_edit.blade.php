@@ -53,8 +53,9 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group @error('Position') has-error has-feedback @enderror">
-                                            <label for="Position">Jabatan</label>
-                                            <input type="text" id="Position" name="Position" value="{{ old('Position', Auth::user()->jabatan) }}" class="form-control" required>
+                                            <label for="Position">Jabatan @if(Auth::user()->level != 'Super-User')(Tidak Dapat Diubah)@endif</label>
+                                            <input type="text" id="Position" name="Position" value="{{ old('Position', Auth::user()->jabatan) }}" class="form-control"
+                                            @if(Auth::user()->level != 'Super-User') readonly style="cursor: not-allowed" @endif required>
                                             @error('Position')
                                             <small id="Position" class="form-text text-muted">{{ $message }}</small>
                                             @enderror

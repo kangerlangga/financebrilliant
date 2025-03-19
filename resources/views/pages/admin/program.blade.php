@@ -38,7 +38,7 @@
             <div class="page-inner">
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
-                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
+                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super-User')
                     <ul class="breadcrumbs">
                         <a href="{{ route('program.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
                             <i class="fa fa-plus-circle mr-1"></i>
@@ -70,19 +70,17 @@
                                     <li>{{ $bp }}</li>
                                 @endforeach
                             </ul>
-                            @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
-                            <a href="{{ route('program.edit', $P->id_programs) }}">
-                                <button type="button" class="btn btn-icon btn-round btn-warning">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                            </a>
-                            <a href="{{ route('program.delete', $P->id_programs) }}" class="but-delete">
-                                <button type="button" class="btn btn-icon btn-round btn-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </a>
-                            @endif
-                            @if (Auth::user()->level == 'Super Admin')
+                            @if (Auth::user()->level == 'Super-User')
+                                <a href="{{ route('program.edit', $P->id_programs) }}">
+                                    <button type="button" class="btn btn-icon btn-round btn-warning">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </a>
+                                <a href="{{ route('program.delete', $P->id_programs) }}" class="but-delete">
+                                    <button type="button" class="btn btn-icon btn-round btn-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </a>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-icon btn-round btn-success" data-toggle="modal" data-target="#{{ $P->id_programs }}">
                                     <i class="fas fa-history"></i>

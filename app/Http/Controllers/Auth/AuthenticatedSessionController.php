@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
     public function create()
     {
         $data = [
-            'judul' => 'Finance Login',
+            'judul' => 'Login',
         ];
         return view('pages.auth.login', $data);
     }

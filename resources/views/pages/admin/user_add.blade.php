@@ -81,11 +81,11 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="Level">Level Akun</label>
-                                            <select class="form-control" id="Level" name="Level">
-                                                <option name='Level' value='Marketing'>Marketing</option>
-                                                <option name='Level' value='Frontliner'>Frontliner</option>
-                                                <option name='Level' value='Finance'>Finance</option>
-                                                <option name='Level' value='Super-User'>Super-User</option>
+                                            <select class="form-control" id="Level" name="Level" onchange="updatePosition()">
+                                                <option value="Marketing">Marketing</option>
+                                                <option value="Frontliner">Frontliner</option>
+                                                <option value="Finance">Finance</option>
+                                                <option value="Super-User">Super-User</option>
                                             </select>
                                         </div>
                                     </div>
@@ -112,7 +112,24 @@
 </div>
 @include('layouts.admin.script')
 <script>
-    //message with sweetalert
+    function updatePosition() {
+        let level = document.getElementById("Level").value;
+        let positionInput = document.getElementById("Position");
+        if (level === "Super-User") {
+            positionInput.readOnly = false;
+            positionInput.style.cursor = "text";
+            positionInput.value = "";
+        } else {
+            positionInput.readOnly = true;
+            positionInput.style.cursor = "not-allowed";
+            positionInput.value = level;
+        }
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        updatePosition();
+    });
+
     @if(session('success'))
     Swal.fire({
         icon: "success",

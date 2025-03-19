@@ -29,7 +29,7 @@
             <div class="page-inner">
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
-                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
+                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super-User')
                     <ul class="breadcrumbs">
                         <a href="{{ route('in.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
                             <i class="fa fa-plus-circle mr-1"></i>
@@ -51,7 +51,7 @@
                                                 <th>Kategori</th>
                                                 <th>Program Terkait</th>
                                                 <th>
-                                                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
+                                                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super-User')
                                                     Aksi
                                                     @else
                                                     Keterangan
@@ -66,7 +66,7 @@
                                                 <td class="text-danger">Rp {{ number_format($I->nominal_pengeluaran, 0, ',', '.') }}</td>
                                                 <td>{{ $I->category_pengeluarans }}</td>
                                                 <td>{{ $I->karyawan ?? '-' }}</td>
-                                                @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
+                                                @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super-User')
                                                 <td>
                                                     <div class="form-button-action">
                                                         <!-- Button trigger modal -->

@@ -29,7 +29,7 @@
             <div class="page-inner">
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
-                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
+                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super-User')
                     <ul class="breadcrumbs">
                         <a href="{{ route('employee.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
                             <i class="fa fa-plus-circle mr-1"></i>
@@ -53,7 +53,7 @@
                                                 <th>Nama</th>
                                                 <th>Status</th>
                                                 <th>
-                                                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
+                                                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super-User')
                                                     Aksi
                                                     @else
                                                     Jabatan
@@ -68,7 +68,7 @@
                                                 <td>{{ $K->name_employees }}</td>
                                                 <td class="{{ $K->status_employees == 'Aktif' ? 'text-success' : 'text-danger' }}">{{ $K->status_employees }}</td>
                                                 <td>
-                                                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super Admin')
+                                                    @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'Super-User')
                                                     <div class="form-button-action">
                                                         @if ($K->status_employees == 'Aktif')
                                                         <a href="{{ route('employee.nonaktif', $K->id_employees) }}">
@@ -88,7 +88,7 @@
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
                                                         </a>
-                                                        @if (Auth::user()->level == 'Super Admin')
+                                                        @if (Auth::user()->level == 'Super-User')
                                                             <!-- Button trigger modal -->
                                                             <button type="button" class="btn btn-link btn-success" data-original-title="Riwayat" data-toggle="modal" data-target="#{{ $K->id_employees }}">
                                                                 <i class="fas fa-history"></i>

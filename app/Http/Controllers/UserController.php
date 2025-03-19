@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->level == 'Super Admin') {
+        if (Auth::user()->level == 'Super-User') {
             $data = [
                 'judul' => 'Manajemen Akun',
                 'DataU' => User::latest()->get(),
@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->level == 'Super Admin') {
+        if (Auth::user()->level == 'Super-User') {
             $data = [
                 'judul' => 'Buat Akun Baru',
                 // 'cMC' => Message::where('status_messages', 'Unread')->count(),
@@ -49,7 +49,7 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if (Auth::user()->level == 'Super Admin') {
+        if (Auth::user()->level == 'Super-User') {
             // validate form
             $request->validate([
                 'Nama'      => 'required|max:45',
@@ -95,7 +95,7 @@ class UserController extends Controller
      */
     public function edit(string $id_akun)
     {
-        if (Auth::user()->level == 'Super Admin') {
+        if (Auth::user()->level == 'Super-User') {
             //get by ID
             $getID = User::where('id_akun', $id_akun)->first();
             $akun = User::findOrFail($getID->id);
@@ -121,7 +121,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id_akun)
     {
-        if (Auth::user()->level == 'Super Admin') {
+        if (Auth::user()->level == 'Super-User') {
             //validate form
             $request->validate([
                 'Nama'      => 'required|max:45',
@@ -155,7 +155,7 @@ class UserController extends Controller
      */
     public function destroy(string $id_akun)
     {
-        if (Auth::user()->level == 'Super Admin') {
+        if (Auth::user()->level == 'Super-User') {
             //get by ID
             $getID = User::where('id_akun', $id_akun)->first();
             $akun = User::findOrFail($getID->id);
@@ -175,7 +175,7 @@ class UserController extends Controller
 
     public function resetPass(string $id_akun)
     {
-        if (Auth::user()->level == 'Super Admin') {
+        if (Auth::user()->level == 'Super-User') {
             //get by ID
             $getID = User::where('id_akun', $id_akun)->first();
             $akun = User::findOrFail($getID->id);
