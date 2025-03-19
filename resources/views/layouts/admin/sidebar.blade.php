@@ -67,6 +67,12 @@
                     </a>
                 </li>
                 @if (Auth::user()->level == 'Super-User' || Auth::user()->level == 'Finance')
+                <li class="nav-item {{ Request::is('employee*') ? 'active' : '' }}">
+                    <a href="{{ route('employee.data') }}">
+                        <i class="fas fa-money-check-alt"></i>
+                        <p>Fee Marketing</p>
+                    </a>
+                </li>
                 <li class="nav-item {{ Request::is('out*') ? 'active' : '' }}">
                     <a href="{{ route('out.data') }}">
                         <i class="fas fa-upload"></i>
