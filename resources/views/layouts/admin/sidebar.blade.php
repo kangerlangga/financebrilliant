@@ -45,16 +45,16 @@
                     </a>
                 </li>
                 @if (Auth::user()->level == 'Marketing' || Auth::user()->level == 'Super-User')
-                <li class="nav-item {{ Request::is('employee*') ? 'active' : '' }}">
-                    <a href="{{ route('employee.data') }}">
+                <li class="nav-item {{ Request::is('coming*') ? 'active' : '' }}">
+                    <a href="{{ route('coming.publik') }}">
                         <i class="fas fa-users"></i>
                         <p>Pendaftaran</p>
                     </a>
                 </li>
                 @endif
                 @if (Auth::user()->level == 'Frontliner' || Auth::user()->level == 'Super-User')
-                <li class="nav-item {{ Request::is('employee*') ? 'active' : '' }}">
-                    <a href="{{ route('employee.data') }}">
+                <li class="nav-item {{ Request::is('coming*') ? 'active' : '' }}">
+                    <a href="{{ route('coming.publik') }}">
                         <i class="fas fa-id-card"></i>
                         <p>Verifikasi</p>
                     </a>
@@ -67,8 +67,8 @@
                     </a>
                 </li>
                 @if (Auth::user()->level == 'Super-User' || Auth::user()->level == 'Finance')
-                <li class="nav-item {{ Request::is('employee*') ? 'active' : '' }}">
-                    <a href="{{ route('employee.data') }}">
+                <li class="nav-item {{ Request::is('coming*') ? 'active' : '' }}">
+                    <a href="{{ route('coming.publik') }}">
                         <i class="fas fa-money-check-alt"></i>
                         <p>Fee Marketing</p>
                     </a>

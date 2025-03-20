@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\PengeluaranController;
@@ -15,6 +14,7 @@ Route::get('/server-time', function () {
 });
 
 // Route::get('/', [PublikController::class, 'coming'])->name('home.publik');
+Route::get('/coming', [PublikController::class, 'coming'])->name('coming.publik');
 
 // Rute Admin
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -30,15 +30,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/program/edit/{id}', [ProgramController::class, 'edit'])->name('program.edit');
     Route::post('/program/update/{id}', [ProgramController::class, 'update'])->name('program.update');
     Route::get('/program/delete/{id}', [ProgramController::class, 'destroy'])->name('program.delete');
-
-    Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.data');
-    Route::get('/employee/add', [EmployeeController::class, 'create'])->name('employee.add');
-    Route::post('/employee/store', [EmployeeController::class, 'store'])->name('employee.store');
-    Route::get('/employee/edit/{id}', [EmployeeController::class, 'edit'])->name('employee.edit');
-    Route::get('/employee/aktif/{id}', [EmployeeController::class, 'aktif'])->name('employee.aktif');
-    Route::get('/employee/nonaktif/{id}', [EmployeeController::class, 'nonaktif'])->name('employee.nonaktif');
-    Route::post('/employee/update/{id}', [EmployeeController::class, 'update'])->name('employee.update');
-    Route::get('/employee/delete/{id}', [EmployeeController::class, 'destroy'])->name('employee.delete');
 
     Route::get('/in', [PemasukanController::class, 'index'])->name('in.data');
     Route::get('/in/add', [PemasukanController::class, 'create'])->name('in.add');
