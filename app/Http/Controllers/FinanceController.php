@@ -10,19 +10,19 @@ class FinanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function data_kas()
+    public function kas_data()
     {
         $data = [
             'judul' => 'Pencatatan Kas (Tanpa Rekening)',
             'DataPKas' => Finance::latest()->get(),
         ];
-        return view('pages.admin.saldo_kas', $data);
+        return view('pages.admin.kas', $data);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function kas_create()
     {
         //
     }

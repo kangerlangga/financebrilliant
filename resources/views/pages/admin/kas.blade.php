@@ -29,6 +29,12 @@
             <div class="page-inner">
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
+                    <ul class="breadcrumbs">
+                        <a href="{{ route('kas.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
+                            <i class="fa fa-plus-circle mr-1"></i>
+                            Catat Transaksi
+                        </a>
+                    </ul>
                 </div>
                 <div class="row">
                     <div class="col-md-12">

@@ -16,16 +16,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->level == 'Super-User') {
+        // if (Auth::user()->level == 'Super-User') {
             $data = [
                 'judul' => 'Manajemen Akun',
                 'DataU' => User::latest()->get(),
                 // 'cMC' => Message::where('status_messages', 'Unread')->count(),
             ];
             return view('pages.admin.user', $data);
-        }else{
-            return redirect()->route('admin.dash');
-        }
+        // }else{
+        //     return redirect()->route('admin.dash');
+        // }
     }
 
     /**

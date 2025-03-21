@@ -104,19 +104,19 @@
                     </div>
                 </li>
                 <li class="nav-item {{ Request::is('transfer*') ? 'active' : '' }}">
-                    <a href="{{ route('transfer.data') }}">
+                    <a href="{{ route('coming.publik') }}">
                         <i class="fas fa-location-arrow"></i>
                         <p>Transfer</p>
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('saldo*') ? 'active' : '' }}">
-                    <a href="{{ route('transfer.data') }}">
+                    <a href="{{ route('coming.publik') }}">
                         <i class="fas fa-wallet"></i>
                         <p>Saldo</p>
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('report*') ? 'active' : '' }}">
-                    <a href="{{ route('transfer.data') }}">
+                    <a href="{{ route('coming.publik') }}">
                         <i class="fas fa-file-invoice"></i>
                         <p>Laporan</p>
                     </a>

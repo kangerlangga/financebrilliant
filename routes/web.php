@@ -32,7 +32,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/program/update/{id}', [ProgramController::class, 'update'])->name('program.update');
     Route::get('/program/delete/{id}', [ProgramController::class, 'destroy'])->name('program.delete');
 
-    Route::get('/transaksi/kas', [FinanceController::class, 'data_kas'])->name('kas.data');
+    Route::get('/transaksi/kas', [FinanceController::class, 'kas_data'])->name('kas.data');
+    Route::get('/transaksi/kas/add', [FinanceController::class, 'kas_create'])->name('kas.add');
     // Route::get('/saldo/add', [FinanceController::class, 'create'])->name('saldo.add');
     // Route::post('/saldo/store', [FinanceController::class, 'store'])->name('saldo.store');
     // Route::get('/saldo/edit/{id}', [FinanceController::class, 'edit'])->name('saldo.edit');
@@ -48,13 +49,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Route::get('/saldo', [FinanceController::class, 'index'])->name('saldo.data');
 
-    Route::get('/user', [UserController::class, 'index'])->name('user.data');
-    Route::get('/user/add', [UserController::class, 'create'])->name('user.add');
-    Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
-    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::get('/user/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
-    Route::get('/user/resetPass/{id}', [UserController::class, 'resetPass'])->name('user.resetpass');
+    Route::middleware(['super-user'])->group(function () {
+        Route::get('/user', [UserController::class, 'index'])->name('user.data');
+        Route::get('/user/add', [UserController::class, 'create'])->name('user.add');
+        Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+        Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+        Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::get('/user/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+        Route::get('/user/resetPass/{id}', [UserController::class, 'resetPass'])->name('user.resetpass'); 
+    });
 });
 
 // Route::get('/dashboard', function () {
