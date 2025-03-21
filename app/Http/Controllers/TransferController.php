@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pengeluaran;
+use App\Models\Transfer;
 use Illuminate\Http\Request;
 
-class PengeluaranController extends Controller
+class TransferController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = [
-            'judul' => 'Data Pengeluaran',
-            'DataOut' => Pengeluaran::latest()->get(),
-        ];
-        return view('pages.admin.out', $data);
+        //
     }
 
     /**
@@ -38,7 +34,7 @@ class PengeluaranController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pengeluaran $pengeluaran)
+    public function show(Transfer $transfer)
     {
         //
     }
@@ -46,7 +42,7 @@ class PengeluaranController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pengeluaran $pengeluaran)
+    public function edit(Transfer $transfer)
     {
         //
     }
@@ -54,7 +50,7 @@ class PengeluaranController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pengeluaran $pengeluaran)
+    public function update(Request $request, Transfer $transfer)
     {
         //
     }
@@ -62,7 +58,7 @@ class PengeluaranController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pengeluaran $pengeluaran)
+    public function destroy(Transfer $transfer)
     {
         //
     }

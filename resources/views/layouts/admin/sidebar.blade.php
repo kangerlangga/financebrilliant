@@ -67,27 +67,51 @@
                     </a>
                 </li>
                 @if (Auth::user()->level == 'Super-User' || Auth::user()->level == 'Finance')
-                <li class="nav-item {{ Request::is('coming*') ? 'active' : '' }}">
-                    <a href="{{ route('coming.publik') }}">
+                <li class="nav-item {{ Request::is('transaksi*') ? 'active' : '' }}">
+                    <a data-toggle="collapse" href="#transaksi">
                         <i class="fas fa-money-check-alt"></i>
-                        <p>Fee Marketing</p>
+                        <p>Transaksi</p>
+                        <span class="caret"></span>
                     </a>
+                    <div class="collapse" id="transaksi">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('kas.data') }}">
+                                    <span class="sub-item">Kas</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('coming.publik') }}">
+                                    <span class="sub-item">Bank BCA</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('coming.publik') }}">
+                                    <span class="sub-item">Bank BRI</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('coming.publik') }}">
+                                    <span class="sub-item">Bank BNI</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('coming.publik') }}">
+                                    <span class="sub-item">Bank Mandiri</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
-                <li class="nav-item {{ Request::is('out*') ? 'active' : '' }}">
-                    <a href="{{ route('out.data') }}">
-                        <i class="fas fa-upload"></i>
-                        <p>Pengeluaran</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::is('in*') ? 'active' : '' }}">
-                    <a href="{{ route('in.data') }}">
-                        <i class="fas fa-download"></i>
-                        <p>Pemasukan</p>
+                <li class="nav-item {{ Request::is('transfer*') ? 'active' : '' }}">
+                    <a href="{{ route('transfer.data') }}">
+                        <i class="fas fa-location-arrow"></i>
+                        <p>Transfer</p>
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('saldo*') ? 'active' : '' }}">
-                    <a href="{{ route('saldo.data') }}">
-                        <i class="fas fa-money-check-alt"></i>
+                    <a href="{{ route('transfer.data') }}">
+                        <i class="fas fa-wallet"></i>
                         <p>Saldo</p>
                     </a>
                 </li>

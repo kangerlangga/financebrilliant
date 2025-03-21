@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('finances', function (Blueprint $table) {
             $table->uuid('id_finances')->primary();
+            $table->string('tabungan');
             $table->bigInteger('saldo_awal');
-            $table->bigInteger('out_in');
+            $table->bigInteger('out_debit');
+            $table->bigInteger('in_kredit');
             $table->bigInteger('saldo_akhir');
             $table->string('noted');
             $table->string('created_by');

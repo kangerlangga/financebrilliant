@@ -6,6 +6,7 @@ use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PublikController;
+use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,26 +32,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/program/update/{id}', [ProgramController::class, 'update'])->name('program.update');
     Route::get('/program/delete/{id}', [ProgramController::class, 'destroy'])->name('program.delete');
 
-    Route::get('/in', [PemasukanController::class, 'index'])->name('in.data');
-    Route::get('/in/add', [PemasukanController::class, 'create'])->name('in.add');
-    Route::post('/in/store', [PemasukanController::class, 'store'])->name('in.store');
-    Route::get('/in/edit/{id}', [PemasukanController::class, 'edit'])->name('in.edit');
-    Route::post('/in/update/{id}', [PemasukanController::class, 'update'])->name('in.update');
-    Route::get('/in/delete/{id}', [PemasukanController::class, 'destroy'])->name('in.delete');
-
-    Route::get('/out', [PengeluaranController::class, 'index'])->name('out.data');
-    Route::get('/out/add', [PengeluaranController::class, 'create'])->name('out.add');
-    Route::post('/out/store', [PengeluaranController::class, 'store'])->name('out.store');
-    Route::get('/out/edit/{id}', [PengeluaranController::class, 'edit'])->name('out.edit');
-    Route::post('/out/update/{id}', [PengeluaranController::class, 'update'])->name('out.update');
-    Route::get('/out/delete/{id}', [PengeluaranController::class, 'destroy'])->name('out.delete');
-
-    Route::get('/saldo', [FinanceController::class, 'index'])->name('saldo.data');
+    Route::get('/transaksi/kas', [FinanceController::class, 'data_kas'])->name('kas.data');
     // Route::get('/saldo/add', [FinanceController::class, 'create'])->name('saldo.add');
     // Route::post('/saldo/store', [FinanceController::class, 'store'])->name('saldo.store');
     // Route::get('/saldo/edit/{id}', [FinanceController::class, 'edit'])->name('saldo.edit');
     // Route::post('/saldo/update/{id}', [FinanceController::class, 'update'])->name('saldo.update');
     // Route::get('/saldo/delete/{id}', [FinanceController::class, 'destroy'])->name('saldo.delete');
+
+    Route::get('/transfer', [TransferController::class, 'index'])->name('transfer.data');
+    Route::get('/transfer/add', [TransferController::class, 'create'])->name('transfer.add');
+    Route::post('/transfer/store', [TransferController::class, 'store'])->name('transfer.store');
+    Route::get('/transfer/edit/{id}', [TransferController::class, 'edit'])->name('transfer.edit');
+    Route::post('/transfer/update/{id}', [TransferController::class, 'update'])->name('transfer.update');
+    Route::get('/transfer/delete/{id}', [TransferController::class, 'destroy'])->name('transfer.delete');
+
+    // Route::get('/saldo', [FinanceController::class, 'index'])->name('saldo.data');
 
     Route::get('/user', [UserController::class, 'index'])->name('user.data');
     Route::get('/user/add', [UserController::class, 'create'])->name('user.add');
