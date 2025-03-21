@@ -115,6 +115,12 @@
                         <p>Saldo</p>
                     </a>
                 </li>
+                <li class="nav-item {{ Request::is('report*') ? 'active' : '' }}">
+                    <a href="{{ route('transfer.data') }}">
+                        <i class="fas fa-file-invoice"></i>
+                        <p>Laporan</p>
+                    </a>
+                </li>
                 @endif
                 @if (Auth::user()->level == 'Super-User')
                 <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
