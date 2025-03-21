@@ -30,7 +30,7 @@
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
                     <ul class="breadcrumbs">
-                        <a href="{{ route('kas.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
+                        <a href="{{ route('trans.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
                             <i class="fa fa-plus-circle mr-1"></i>
                             Catat Transaksi
                         </a>
@@ -46,19 +46,19 @@
                                             <tr>
                                                 <th>Waktu</th>
                                                 <th>Keterangan</th>
-                                                <th>Debit</th>
-                                                <th>Kredit</th>
+                                                <th>Debit (-)</th>
+                                                <th>Kredit (+)</th>
                                                 <th>Saldo</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($DataPKas as $K)
+                                            @foreach ($DataTr as $T)
                                             <tr>
-                                                <td>{{ $K->created_at }}</td>
-                                                <td>{{ $K->noted }}</td>
-                                                <td>Rp {{ number_format($K->out_debit, 0, ',', '.') }}</td>
-                                                <td>Rp {{ number_format($K->in_kredit, 0, ',', '.') }}</td>
-                                                <td>Rp {{ number_format($K->saldo_akhir, 0, ',', '.') }}</td>
+                                                <td>{{ $T->created_at }}</td>
+                                                <td>{{ $T->noted }}</td>
+                                                <td>Rp {{ number_format($T->out_debit, 0, ',', '.') }}</td>
+                                                <td>Rp {{ number_format($T->in_kredit, 0, ',', '.') }}</td>
+                                                <td>Rp {{ number_format($T->saldo_akhir, 0, ',', '.') }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -76,34 +76,14 @@
 @include('layouts.admin.script')
 <script>
     $(document).ready(function() {
-       $('#tabel-saldo').DataTable({
+        $('#tabel-saldo').DataTable({
+            "order": [[0, "desc"]],
             "columnDefs": [
                 {
                     "targets": [0],
                     "type": "date"
                 }
             ]
-        });
-    });
-
-    $(document).on('click','.but-delete',function(e) {
-
-        e.preventDefault();
-        const href1 = $(this).attr('href');
-
-        Swal.fire({
-            title: 'Apakah Anda yakin?',
-            text: "Data ini akan Dihapus Secara Permanen!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#fd7e14',
-            confirmButtonText: 'HAPUS',
-            cancelButtonText: 'BATAL'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                document.location.href = href1;
-            }
         });
     });
 

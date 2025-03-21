@@ -6,6 +6,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PublikController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
+use App\Models\Finance;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/server-time', function () {
@@ -26,14 +27,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/program', [ProgramController::class, 'index'])->name('program.data');
 
     Route::middleware(['finance'])->group(function () {
+        Route::get('/get-saldo/{tabungan}', function ($tabungan) {
+            $saldo = Finance::where('tabungan', $tabungan)->latest()->value('saldo_akhir');
+            return response()->json(['saldo' => $saldo ?? 0]);
+        });
+
         Route::get('/program/add', [ProgramController::class, 'create'])->name('program.add');
         Route::post('/program/store', [ProgramController::class, 'store'])->name('program.store');
         Route::get('/program/edit/{id}', [ProgramController::class, 'edit'])->name('program.edit');
         Route::post('/program/update/{id}', [ProgramController::class, 'update'])->name('program.update');
         Route::get('/program/delete/{id}', [ProgramController::class, 'destroy'])->name('program.delete');
 
+        Route::get('/transaksi/add', [FinanceController::class, 'create'])->name('trans.add');
+        Route::post('/transaksi/store', [FinanceController::class, 'store'])->name('trans.store');
         Route::get('/transaksi/kas', [FinanceController::class, 'kas_data'])->name('kas.data');
-        Route::get('/transaksi/kas/add', [FinanceController::class, 'kas_create'])->name('kas.add');
+        Route::get('/transaksi/bca', [FinanceController::class, 'bca_data'])->name('bca.data');
+        Route::get('/transaksi/bri', [FinanceController::class, 'bri_data'])->name('bri.data');
+        Route::get('/transaksi/bni', [FinanceController::class, 'bni_data'])->name('bni.data');
+        Route::get('/transaksi/mandiri', [FinanceController::class, 'mandiri_data'])->name('mandiri.data');
 
         Route::get('/transfer', [TransferController::class, 'index'])->name('transfer.data');
         Route::get('/transfer/add', [TransferController::class, 'create'])->name('transfer.add');

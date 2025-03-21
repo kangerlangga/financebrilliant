@@ -40,11 +40,13 @@ class Finance extends Model
      * @var array
      */
     protected $fillable = [
-        'id_finances', 
-        'nip_finances', 
-        'name_finances',
-        'position_finances',
-        'status_finances',
+        'id_finances',  
+        'tabungan', 
+        'saldo_awal', 
+        'out_debit', 
+        'in_kredit', 
+        'saldo_akhir', 
+        'noted', 
         'created_by', 
         'modified_by'
     ];

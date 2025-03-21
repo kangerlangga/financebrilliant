@@ -81,22 +81,22 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('coming.publik') }}">
+                                <a href="{{ route('bca.data') }}">
                                     <span class="sub-item">Bank BCA</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('coming.publik') }}">
+                                <a href="{{ route('bri.data') }}">
                                     <span class="sub-item">Bank BRI</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('coming.publik') }}">
+                                <a href="{{ route('bni.data') }}">
                                     <span class="sub-item">Bank BNI</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('coming.publik') }}">
+                                <a href="{{ route('mandiri.data') }}">
                                     <span class="sub-item">Bank Mandiri</span>
                                 </a>
                             </li>
@@ -105,8 +105,8 @@
                 </li>
                 <li class="nav-item {{ Request::is('transfer*') ? 'active' : '' }}">
                     <a href="{{ route('coming.publik') }}">
-                        <i class="fas fa-location-arrow"></i>
-                        <p>Transfer</p>
+                        <i class="fas fa-map-signs"></i>
+                        <p>Pindah Dana</p>
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('saldo*') ? 'active' : '' }}">
@@ -116,10 +116,35 @@
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('report*') ? 'active' : '' }}">
-                    <a href="{{ route('coming.publik') }}">
-                        <i class="fas fa-file-invoice"></i>
+                    <a data-toggle="collapse" href="#report">
+                        <i class="fas fa-chart-bar"></i>
                         <p>Laporan</p>
+                        <span class="caret"></span>
                     </a>
+                    <div class="collapse" id="report">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('coming.publik') }}">
+                                    <span class="sub-item">Harian</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('coming.publik') }}">
+                                    <span class="sub-item">Mingguan</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('coming.publik') }}">
+                                    <span class="sub-item">Bulanan</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('coming.publik') }}">
+                                    <span class="sub-item">Tahunan</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 @endif
                 @if (Auth::user()->level == 'Super-User')

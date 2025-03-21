@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Finance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class FinanceController extends Controller
 {
@@ -14,17 +16,56 @@ class FinanceController extends Controller
     {
         $data = [
             'judul' => 'Pencatatan Kas (Tanpa Rekening)',
-            'DataPKas' => Finance::latest()->get(),
+            'DataTr' => Finance::where('tabungan', 'Kas')->latest()->get(),
         ];
-        return view('pages.admin.kas', $data);
+        return view('pages.admin.tr_data', $data);
+    }
+
+    public function bca_data()
+    {
+        $data = [
+            'judul' => 'Pencatatan Rekening BCA',
+            'DataTr' => Finance::where('tabungan', 'BCA')->latest()->get(),
+        ];
+        return view('pages.admin.tr_data', $data);
+    }
+
+    public function bri_data()
+    {
+        $data = [
+            'judul' => 'Pencatatan Rekening BRI',
+            'DataTr' => Finance::where('tabungan', 'BRI')->latest()->get(),
+        ];
+        return view('pages.admin.tr_data', $data);
+    }
+
+    public function bni_data()
+    {
+        $data = [
+            'judul' => 'Pencatatan Rekening BNI',
+            'DataTr' => Finance::where('tabungan', 'BNI')->latest()->get(),
+        ];
+        return view('pages.admin.tr_data', $data);
+    }
+
+    public function mandiri_data()
+    {
+        $data = [
+            'judul' => 'Pencatatan Rekening Mandiri',
+            'DataTr' => Finance::where('tabungan', 'Mandiri')->latest()->get(),
+        ];
+        return view('pages.admin.tr_data', $data);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function kas_create()
+    public function create()
     {
-        //
+        $data = [
+            'judul' => 'Catat Transaksi Baru',
+        ];
+        return view('pages.admin.tr_add', $data);
     }
 
     /**
@@ -32,7 +73,29 @@ class FinanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Keterangan'=> 'required|max:255',
+            'Debit'     => 'required|numeric|min:0',
+            'Kredit'    => 'required|numeric|min:0',
+        ]);
+
+        $latestFinance = Finance::where('tabungan', $request->Tabungan)->latest()->first();
+        $saldoAwal = $latestFinance ? $latestFinance->saldo_akhir : 0;
+        $saldoAkhir = ($saldoAwal - $request->Debit) + $request->Kredit;
+
+        Finance::create([
+            'id_finances'   => 'FT-'.Str::uuid(),
+            'tabungan'      => $request->Tabungan,
+            'saldo_awal'    => $saldoAwal,
+            'out_debit'     => $request->Debit,
+            'in_kredit'     => $request->Kredit,
+            'saldo_akhir'   => $saldoAkhir,
+            'noted'         => $request->Keterangan,
+            'created_by'    => Auth::user()->email,
+            'modified_by'   => Auth::user()->email,
+        ]);
+
+        return redirect()->route('trans.add')->with('success', 'Transaksi berhasil ditambahkan.');
     }
 
     /**
