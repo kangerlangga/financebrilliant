@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transfers', function (Blueprint $table) {
-            $table->string('id_transfers')->primary();
-            $table->string('tabungan_asal');
-            $table->string('tabungan_tujuan');
-            $table->bigInteger('nominal');
-            $table->bigInteger('admin');
-            $table->string('noted');
+        Schema::create('periodes', function (Blueprint $table) {
+            $table->string('id_periodes')->primary();
+            $table->date('date_periodes');
+            $table->string('status_periodes');
+            $table->string('category_periodes');
             $table->string('created_by');
             $table->string('modified_by');
             $table->timestamps();
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transfers');
+        Schema::dropIfExists('periodes');
     }
 };

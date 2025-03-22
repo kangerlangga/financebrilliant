@@ -44,7 +44,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                @if (Auth::user()->level == 'Marketing' || Auth::user()->level == 'Super-User')
+                @if (Auth::user()->level == 'Marketing')
                 <li class="nav-item {{ Request::is('coming*') ? 'active' : '' }}">
                     <a href="{{ route('coming.publik') }}">
                         <i class="fas fa-users"></i>
@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 @endif
-                @if (Auth::user()->level == 'Frontliner' || Auth::user()->level == 'Super-User')
+                @if (Auth::user()->level == 'Frontliner')
                 <li class="nav-item {{ Request::is('coming*') ? 'active' : '' }}">
                     <a href="{{ route('coming.publik') }}">
                         <i class="fas fa-id-card"></i>
@@ -60,13 +60,13 @@
                     </a>
                 </li>
                 @endif
-                <li class="nav-item {{ Request::is('program*') ? 'active' : '' }}">
-                    <a href="{{ route('program.data') }}">
-                        <i class="fas fa-school"></i>
-                        <p>Program</p>
+                @if (Auth::user()->level == 'Super-User' || Auth::user()->level == 'Finance')
+                <li class="nav-item {{ Request::is('coming*') ? 'active' : '' }}">
+                    <a href="{{ route('coming.publik') }}">
+                        <i class="fas fa-users"></i>
+                        <p>Member</p>
                     </a>
                 </li>
-                @if (Auth::user()->level == 'Super-User' || Auth::user()->level == 'Finance')
                 <li class="nav-item {{ Request::is('transaksi*') ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#transaksi">
                         <i class="fas fa-money-check-alt"></i>
@@ -104,7 +104,7 @@
                     </div>
                 </li>
                 <li class="nav-item {{ Request::is('transfer*') ? 'active' : '' }}">
-                    <a href="{{ route('coming.publik') }}">
+                    <a href="{{ route('transfer.data') }}">
                         <i class="fas fa-map-signs"></i>
                         <p>Pindah Dana</p>
                     </a>
@@ -155,6 +155,18 @@
                     </a>
                 </li>
                 @endif
+                <li class="nav-item {{ Request::is('program*') ? 'active' : '' }}">
+                    <a href="{{ route('program.data') }}">
+                        <i class="fas fa-school"></i>
+                        <p>Program</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ Request::is('periode*') ? 'active' : '' }}">
+                    <a href="{{ route('periode.data') }}">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p>Periode</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

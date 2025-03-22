@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PublikController;
 use App\Http\Controllers\TransferController;
@@ -25,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/profile/updatePass', [AdminController::class, 'updatePass'])->name('prof.update.pass');
 
     Route::get('/program', [ProgramController::class, 'index'])->name('program.data');
+    Route::get('/periode', [PeriodeController::class, 'index'])->name('periode.data');
 
     Route::middleware(['finance'])->group(function () {
         Route::get('/get-saldo/{tabungan}', function ($tabungan) {
@@ -37,6 +39,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/program/edit/{id}', [ProgramController::class, 'edit'])->name('program.edit');
         Route::post('/program/update/{id}', [ProgramController::class, 'update'])->name('program.update');
         Route::get('/program/delete/{id}', [ProgramController::class, 'destroy'])->name('program.delete');
+
+        Route::get('/periode/add', [PeriodeController::class, 'create'])->name('periode.add');
+        Route::post('/periode/store', [PeriodeController::class, 'store'])->name('periode.store');
+        Route::get('/periode/edit/{id}', [PeriodeController::class, 'edit'])->name('periode.edit');
+        Route::get('/periode/aktif/{id}', [PeriodeController::class, 'aktif'])->name('periode.aktif');
+        Route::get('/periode/nonaktif/{id}', [PeriodeController::class, 'nonaktif'])->name('periode.nonaktif');
+        Route::post('/periode/update/{id}', [PeriodeController::class, 'update'])->name('periode.update');
+        Route::get('/periode/delete/{id}', [PeriodeController::class, 'destroy'])->name('periode.delete');
 
         Route::get('/transaksi/add', [FinanceController::class, 'create'])->name('trans.add');
         Route::post('/transaksi/store', [FinanceController::class, 'store'])->name('trans.store');

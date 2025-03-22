@@ -12,7 +12,11 @@ class TransferController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'judul' => 'Pencatatan Perpindahan Dana',
+            'DataTr' => Transfer::latest()->get(),
+        ];
+        return view('pages.admin.transfer', $data);
     }
 
     /**

@@ -4,21 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transfer extends Model
+class Periode extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'transfers';
+    protected $table = 'periodes';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_transfers';
+    protected $primaryKey = 'id_periodes';
 
     /**
      * Indicates if the model's ID is auto-incrementing.
@@ -28,24 +28,15 @@ class Transfer extends Model
     public $incrementing = false;
 
     /**
-     * The data type of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'id_transfers',  
-        'tabungan_asal', 
-        'tabungan_tujuan', 
-        'nominal', 
-        'admin',
-        'noted', 
+        'id_periodes', 
+        'date_periodes', 
+        'status_periodes',
+        'category_periodes',
         'created_by', 
         'modified_by'
     ];

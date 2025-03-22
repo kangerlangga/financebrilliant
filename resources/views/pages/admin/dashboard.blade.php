@@ -52,7 +52,7 @@
                                             <p class="card-category">Total Pendaftar ({{ $currentMonth }} {{ $currentYear }})</p>
                                             <h4 class="card-title">50 Siswa</h4>
                                             @elseif (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
-                                            <p class="card-category">Saldo Saat Ini</p>
+                                            <p class="card-category">Total Saldo Keseluruhan</p>
                                             <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
                                             @endif
                                         </div>
