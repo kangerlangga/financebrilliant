@@ -18,32 +18,34 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $now = time();
-        $fiveMinutesAgo = $now - 300;
+        $ValueBlueLeft = 0; $ValueRedLeft = 0; $ValueGreenRight = 0;
+        $now = time(); $fiveMinutesAgo = $now - 300;
 
-        // Ambil saldo terakhir dari masing-masing tabungan
-        $saldoKas = Finance::where('tabungan', 'Kas')->latest()->value('saldo_akhir') ?? 0;
-        $saldoBCA = Finance::where('tabungan', 'BCA')->latest()->value('saldo_akhir') ?? 0;
-        $saldoBRI = Finance::where('tabungan', 'BRI')->latest()->value('saldo_akhir') ?? 0;
-        $saldoBNI = Finance::where('tabungan', 'BNI')->latest()->value('saldo_akhir') ?? 0;
-        $saldoMandiri = Finance::where('tabungan', 'Mandiri')->latest()->value('saldo_akhir') ?? 0;
-        
-        // Total saldo semua tabungan
-        $saldoAll = $saldoKas + $saldoBCA + $saldoBRI + $saldoBNI + $saldoMandiri;
+        if (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User') {
+            // Ambil saldo terakhir dari masing-masing tabungan
+            $saldoKas = Finance::where('tabungan', 'Kas')->latest()->value('saldo_akhir') ?? 0;
+            $saldoBCA = Finance::where('tabungan', 'BCA')->latest()->value('saldo_akhir') ?? 0;
+            $saldoBRI = Finance::where('tabungan', 'BRI')->latest()->value('saldo_akhir') ?? 0;
+            $saldoBNI = Finance::where('tabungan', 'BNI')->latest()->value('saldo_akhir') ?? 0;
+            $saldoMandiri = Finance::where('tabungan', 'Mandiri')->latest()->value('saldo_akhir') ?? 0;
+            
+            // Total saldo semua tabungan
+            $ValueBlueLeft = $saldoKas + $saldoBCA + $saldoBRI + $saldoBNI + $saldoMandiri;
 
-        // Hitung total pengeluaran bulan ini
-        $OutMonth = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
-        ->sum('out_debit');
+            // Hitung total pengeluaran bulan ini
+            $ValueRedLeft = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
+            ->sum('out_debit');
 
-        // Hitung total pemasukan bulan ini
-        $InMonth = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
-        ->sum('in_kredit');
+            // Hitung total pemasukan bulan ini
+            $ValueGreenRight = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
+            ->sum('in_kredit');
+        }
 
         $data = [
             'judul' => 'Dashboard',
-            'jSk'   => $saldoAll,
-            'jOm'   => $OutMonth,
-            'jIm'   => $InMonth,
+            'vBl'   => $ValueBlueLeft,
+            'vRl'   => $ValueRedLeft,
+            'vGr'   => $ValueGreenRight,
             'cVO'   => DB::table('sessions')->where('last_activity', '>=', $fiveMinutesAgo)->count(),
         ];
         return view('pages.admin.dashboard', $data);
