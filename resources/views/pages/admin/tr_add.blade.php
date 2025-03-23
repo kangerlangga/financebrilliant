@@ -30,7 +30,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                            <form method="POST" action="{{ route('trans.store') }}" enctype="multipart/form-data">
+                            <form method="POST" id="transaksi-add" action="{{ route('trans.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12">
@@ -87,7 +87,7 @@
                                     </div>
                                     <div class="col-sm-12 mt-1">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary fw-bold text-uppercase">
+                                            <button type="button" id="btn-simpan" class="btn btn-primary fw-bold text-uppercase">
                                                 <i class="fas fa-save mr-2"></i>Simpan
                                             </button>
                                             <button type="reset" class="btn btn-warning fw-bold text-uppercase">
@@ -138,6 +138,29 @@
             hitungSaldoAkhir();
         });
     });
+
+    document.getElementById("btn-simpan").addEventListener("click", function() {
+        let form = document.getElementById("transaksi-add");
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        Swal.fire({
+            title: 'Apakah data sudah benar?',
+            text: "Data yang disimpan tidak bisa diubah.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#fd7e14',
+            confirmButtonText: 'SIMPAN',
+            cancelButtonText: 'BATAL'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    });
+
 
     @if(session('success'))
     Swal.fire({

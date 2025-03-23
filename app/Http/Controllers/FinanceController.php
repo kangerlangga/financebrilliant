@@ -129,4 +129,12 @@ class FinanceController extends Controller
     {
         //
     }
+
+    public function saldo()
+    {
+        $data = [
+            'judul' => 'Saldo Tabungan',
+        ];
+        return view('pages.admin.saldo', $data);
+    }
 }

@@ -62,6 +62,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/transfer/edit/{id}', [TransferController::class, 'edit'])->name('transfer.edit');
         Route::post('/transfer/update/{id}', [TransferController::class, 'update'])->name('transfer.update');
         Route::get('/transfer/delete/{id}', [TransferController::class, 'destroy'])->name('transfer.delete');
+
+        Route::get('/saldo', [FinanceController::class, 'saldo'])->name('saldo.data');
     });
 
     // Route::get('/saldo', [FinanceController::class, 'index'])->name('saldo.data');

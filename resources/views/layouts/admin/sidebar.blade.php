@@ -110,7 +110,7 @@
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('saldo*') ? 'active' : '' }}">
-                    <a href="{{ route('coming.publik') }}">
+                    <a href="{{ route('saldo.data') }}">
                         <i class="fas fa-wallet"></i>
                         <p>Saldo</p>
                     </a>

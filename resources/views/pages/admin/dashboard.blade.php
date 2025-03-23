@@ -53,7 +53,7 @@
                                             <h4 class="card-title">50 Siswa</h4>
                                             @elseif (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
                                             <p class="card-category">Total Saldo Keseluruhan</p>
-                                            <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
+                                            <h4 class="card-title">Rp {{ number_format($jSk, 0, ',', '.') }}</h4>
                                             @endif
                                         </div>
                                     </div>
@@ -105,7 +105,7 @@
                                             <h4 class="card-title">15 Siswa</h4>
                                             @elseif (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
                                             <p class="card-category">Total Pengeluaran ({{ $currentMonth }} {{ $currentYear }})</p>
-                                            <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
+                                            <h4 class="card-title">Rp {{ number_format($jOm, 0, ',', '.') }}</h4>
                                             @endif
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@
                                             <h4 class="card-title">35 Siswa</h4>
                                             @elseif (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
                                             <p class="card-category">Total Pemasukan ({{ $currentMonth }} {{ $currentYear }})</p>
-                                            <h4 class="card-title">Rp {{ number_format('999000000000000', 0, ',', '.') }}</h4>
+                                            <h4 class="card-title">Rp {{ number_format($jIm, 0, ',', '.') }}</h4>
                                             @endif
                                         </div>
                                     </div>

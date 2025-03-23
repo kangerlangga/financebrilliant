@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Finance;
 use App\Models\Program;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,16 +13,38 @@ use Illuminate\Validation\Rules\Password;
 
 class AdminController extends Controller
 {
-    //Fungsi untuk halaman dashboard
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $now = time();
         $fiveMinutesAgo = $now - 300;
+
+        // Ambil saldo terakhir dari masing-masing tabungan
+        $saldoKas = Finance::where('tabungan', 'Kas')->latest()->value('saldo_akhir') ?? 0;
+        $saldoBCA = Finance::where('tabungan', 'BCA')->latest()->value('saldo_akhir') ?? 0;
+        $saldoBRI = Finance::where('tabungan', 'BRI')->latest()->value('saldo_akhir') ?? 0;
+        $saldoBNI = Finance::where('tabungan', 'BNI')->latest()->value('saldo_akhir') ?? 0;
+        $saldoMandiri = Finance::where('tabungan', 'Mandiri')->latest()->value('saldo_akhir') ?? 0;
+        
+        // Total saldo semua tabungan
+        $saldoAll = $saldoKas + $saldoBCA + $saldoBRI + $saldoBNI + $saldoMandiri;
+
+        // Hitung total pengeluaran bulan ini
+        $OutMonth = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
+        ->sum('out_debit');
+
+        // Hitung total pemasukan bulan ini
+        $InMonth = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
+        ->sum('in_kredit');
+
         $data = [
             'judul' => 'Dashboard',
-            'jPs' => Program::where('visib_programs', 'Showing')->count(),
-            'jPh' => Program::where('visib_programs', 'Hiding')->count(),
-            'cVO' => DB::table('sessions')->where('last_activity', '>=', $fiveMinutesAgo)->count(),
+            'jSk'   => $saldoAll,
+            'jOm'   => $OutMonth,
+            'jIm'   => $InMonth,
+            'cVO'   => DB::table('sessions')->where('last_activity', '>=', $fiveMinutesAgo)->count(),
         ];
         return view('pages.admin.dashboard', $data);
     }

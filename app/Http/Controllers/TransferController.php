@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Finance;
 use App\Models\Transfer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class TransferController extends Controller
 {
@@ -24,7 +28,10 @@ class TransferController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'judul' => 'Tambah Perpindahan Dana',
+        ];
+        return view('pages.admin.transfer_add', $data);
     }
 
     /**
@@ -32,7 +39,103 @@ class TransferController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Keterangan'     => 'required|max:255',
+            'Nominal'        => 'required|numeric|min:1',
+            'Admin'          => 'required|numeric|min:0',
+            'TabunganAsal'   => 'required|different:TabunganTujuan',
+            'TabunganTujuan' => 'required',
+        ]);
+
+        // Ambil saldo terakhir dari tabungan asal
+        $latestFinance = Finance::where('tabungan', $request->TabunganAsal)->latest()->first();
+        $saldoTAwal = $latestFinance ? $latestFinance->saldo_akhir : 0;
+        $transfer = $request->Nominal + $request->Admin;
+
+        // Cek apakah saldo cukup
+        if ($transfer > $saldoTAwal) {
+            return redirect()->route('transfer.add')->with(['error' => 'Saldo Tidak Mencukupi!']);
+        }
+
+        // Gunakan database transaction untuk menjaga konsistensi data
+        DB::beginTransaction();
+
+        try {
+            $updateFinanceOut = $this->updateFinanceOut($request);
+            $updateFinanceIn = $this->updateFinanceIn($request);
+
+            if ($updateFinanceOut && $updateFinanceIn) {
+                Transfer::create([
+                    'id_transfers'      => 'TF-' . Str::uuid(),
+                    'tabungan_asal'     => $request->TabunganAsal,
+                    'tabungan_tujuan'   => $request->TabunganTujuan,
+                    'nominal'           => $request->Nominal,
+                    'admin'             => $request->Admin,
+                    'noted'             => $request->Keterangan,
+                    'created_by'        => Auth::user()->email,
+                    'modified_by'       => Auth::user()->email,
+                ]);
+
+                DB::commit(); // Simpan semua perubahan jika berhasil
+                return redirect()->route('transfer.data')->with(['success' => 'Perpindahan Dana Berhasil!']);
+            } else {
+                DB::rollBack(); // Batalkan semua perubahan jika ada kegagalan
+                return redirect()->route('transfer.add')->with(['error' => 'Gagal Memperbarui Saldo!']);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack(); // Batalkan perubahan jika terjadi error
+            return redirect()->route('transfer.add')->with(['error' => 'Terjadi Kesalahan Sistem!']);
+        }
+    }
+
+    public function updateFinanceOut(Request $request)
+    {
+        $latestFinance = Finance::where('tabungan', $request->TabunganAsal)->latest()->first();
+        $saldoAwal = $latestFinance ? $latestFinance->saldo_akhir : 0;
+        $transfer = $request->Nominal + $request->Admin;
+        $saldoAkhir = $saldoAwal - $transfer;
+
+        // Pastikan saldo cukup sebelum membuat transaksi
+        if ($transfer > $saldoAwal) {
+            return false; // Gagal jika saldo tidak cukup
+        }
+
+        // Buat transaksi keluar
+        Finance::create([
+            'id_finances'   => 'FT-' . Str::uuid(),
+            'tabungan'      => $request->TabunganAsal,
+            'saldo_awal'    => $saldoAwal,
+            'out_debit'     => $transfer,
+            'in_kredit'     => 0,
+            'saldo_akhir'   => $saldoAkhir,
+            'noted'         => $request->TabunganAsal.' -> '.$request->TabunganTujuan.' (Uang Keluar) ['.$request->Keterangan.']',
+            'created_by'    => Auth::user()->email,
+            'modified_by'   => Auth::user()->email,
+        ]);
+
+        return true;
+    }
+
+    public function updateFinanceIn(Request $request)
+    {
+        $latestFinance = Finance::where('tabungan', $request->TabunganTujuan)->latest()->first();
+        $saldoAwal = $latestFinance ? $latestFinance->saldo_akhir : 0;
+        $saldoAkhir = $saldoAwal + $request->Nominal;
+
+        // Buat transaksi masuk
+        Finance::create([
+            'id_finances'   => 'FT-' . Str::uuid(),
+            'tabungan'      => $request->TabunganTujuan,
+            'saldo_awal'    => $saldoAwal,
+            'out_debit'     => 0,
+            'in_kredit'     => $request->Nominal,
+            'saldo_akhir'   => $saldoAkhir,
+            'noted'         => $request->TabunganAsal.' -> '.$request->TabunganTujuan.' (Uang Masuk) ['.$request->Keterangan.']',
+            'created_by'    => Auth::user()->email,
+            'modified_by'   => Auth::user()->email,
+        ]);
+
+        return true;
     }
 
     /**

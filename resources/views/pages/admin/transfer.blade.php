@@ -30,7 +30,7 @@
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
                     <ul class="breadcrumbs">
-                        <a href="{{ route('coming.publik') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
+                        <a href="{{ route('transfer.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
                             <i class="fa fa-plus-circle mr-1"></i>
                             Pindah Dana
                         </a>
@@ -57,7 +57,12 @@
                                                 <td>{{ $T->created_at }}</td>
                                                 <td>{{ $T->tabungan_asal }}</td>
                                                 <td>{{ $T->tabungan_tujuan }}</td>
-                                                <td>Rp {{ number_format($T->nominal, 0, ',', '.') }}</td>
+                                                <td>
+                                                    Rp {{ number_format($T->nominal, 0, ',', '.') }} 
+                                                    @if ($T->admin > 0)
+                                                        (Rp {{ number_format($T->admin, 0, ',', '.') }})
+                                                    @endif
+                                                </td>                                                
                                                 <td>{{ $T->noted }}</td>
                                             </tr>
                                             @endforeach
