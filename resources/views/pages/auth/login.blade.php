@@ -66,7 +66,7 @@
     position: fixed;
     top: calc(50% - 30px);
     left: calc(50% - 30px);
-    border: 6px solid #013679;
+    border: 6px solid #404285;
     border-top-color: #e7e4fe;
     border-radius: 50%;
     width: 60px;
@@ -121,7 +121,7 @@
         }
 
         body {
-        background: #013679;
+        background: #404285;
         color: black;
         }
 
@@ -134,13 +134,13 @@
         }
 
         .btn {
-        background: #013679;
-        border-color: #013679;
+        background: #404285;
+        border-color: #404285;
         }
 
         .btn:hover {
-        background: #0359A0;
-        border-color: #0359A0;
+        background: #34356E;
+        border-color: #34356E;
         }
 
         input {
