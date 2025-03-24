@@ -21,7 +21,39 @@
 	<link rel="icon" type="image/png" href="{{  url('') }}/assets/logo/logop.png">
 </head>
 <body>
+    <div id="preloader"></div>
     <style>
+    #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+        overflow: hidden;
+        background: #fff;
+    }
+    #preloader:before {
+        content: "";
+        position: fixed;
+        top: calc(50% - 30px);
+        left: calc(50% - 30px);
+        border: 6px solid #404285;
+        border-top-color: #e7e4fe;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: animate-preloader 1s linear infinite;
+    }
+    @keyframes animate-preloader {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
     * {
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
@@ -129,5 +161,6 @@
 			<a href="{{ route('admin.dash') }}">Back To Home</a>
 		</div>
 	</div>
+<script src="{{  url('') }}/assets/public/js/main2.js"></script>
 </body>
 </html>
