@@ -5,6 +5,7 @@ use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PublikController;
+use App\Http\Controllers\TabunganController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 use App\Models\Finance;
@@ -63,7 +64,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/transfer/update/{id}', [TransferController::class, 'update'])->name('transfer.update');
         Route::get('/transfer/delete/{id}', [TransferController::class, 'destroy'])->name('transfer.delete');
 
-        Route::get('/saldo', [FinanceController::class, 'saldo'])->name('saldo.data');
+        Route::get('/tabungan', [TabunganController::class, 'index'])->name('tabungan.data');
+        Route::get('/tabungan/add', [TabunganController::class, 'create'])->name('tabungan.add');
+        Route::post('/tabungan/store', [TabunganController::class, 'store'])->name('tabungan.store');
+        Route::get('/tabungan/edit/{id}', [TabunganController::class, 'edit'])->name('tabungan.edit');
+        Route::post('/tabungan/update/{id}', [TabunganController::class, 'update'])->name('tabungan.update');
+        Route::get('/tabungan/delete/{id}', [TabunganController::class, 'destroy'])->name('tabungan.delete');
     });
 
     // Route::get('/saldo', [FinanceController::class, 'index'])->name('saldo.data');

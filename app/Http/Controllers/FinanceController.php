@@ -129,28 +129,4 @@ class FinanceController extends Controller
     {
         //
     }
-
-    public function saldo()
-    {
-        // Ambil saldo terakhir dari masing-masing tabungan
-        $saldoKas = Finance::where('tabungan', 'Kas')->latest()->value('saldo_akhir') ?? 0;
-        $saldoBCA = Finance::where('tabungan', 'BCA')->latest()->value('saldo_akhir') ?? 0;
-        $saldoBRI = Finance::where('tabungan', 'BRI')->latest()->value('saldo_akhir') ?? 0;
-        $saldoBNI = Finance::where('tabungan', 'BNI')->latest()->value('saldo_akhir') ?? 0;
-        $saldoMandiri = Finance::where('tabungan', 'Mandiri')->latest()->value('saldo_akhir') ?? 0;
-        
-        // Total saldo semua tabungan
-        $saldoAll = $saldoKas + $saldoBCA + $saldoBRI + $saldoBNI + $saldoMandiri;
-
-        $data = [
-            'judul' => 'Saldo Tabungan',
-            'jSKas' => $saldoKas,
-            'jSBCA' => $saldoBCA,
-            'jSBRI' => $saldoBRI,
-            'jSBNI' => $saldoBNI,
-            'jSMan' => $saldoMandiri,
-            'jSk'   => $saldoAll,
-        ];
-        return view('pages.admin.saldo', $data);
-    }
 }

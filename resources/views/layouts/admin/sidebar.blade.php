@@ -67,6 +67,12 @@
                         <p>Member</p>
                     </a>
                 </li>
+                <li class="nav-item {{ Request::is('tabungan*') ? 'active' : '' }}">
+                    <a href="{{ route('tabungan.data') }}">
+                        <i class="fas fa-wallet"></i>
+                        <p>Tabungan</p>
+                    </a>
+                </li>
                 <li class="nav-item {{ Request::is('transaksi*') ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#transaksi">
                         <i class="fas fa-money-check-alt"></i>
@@ -107,12 +113,6 @@
                     <a href="{{ route('transfer.data') }}">
                         <i class="fas fa-map-signs"></i>
                         <p>Pindah Dana</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::is('saldo*') ? 'active' : '' }}">
-                    <a href="{{ route('saldo.data') }}">
-                        <i class="fas fa-wallet"></i>
-                        <p>Saldo</p>
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('report*') ? 'active' : '' }}">
