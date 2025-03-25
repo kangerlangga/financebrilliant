@@ -30,17 +30,17 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                            <form method="POST" action="{{ route('periode.store') }}" enctype="multipart/form-data" id="order_add">
+                            <form method="POST" action="{{ route('periode.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label for="category">Kategori</label>
                                             <select class="form-control" id="category" name="category">
-                                                <option name='category' value='Kelas Offline'>Kelas Offline</option>
-                                                <option name='category' value='Kelas Online'>Kelas Online</option>
-                                                <option name='category' value='Kelas Offline + Holiday'>Kelas Offline + Holiday</option>
-                                                <option name='category' value='Paket Liburan (Khusus Member)'>Paket Liburan (Khusus Member)</option>
+                                                <option value='Kelas Offline'>Kelas Offline</option>
+                                                <option value='Kelas Online'>Kelas Online</option>
+                                                <option value='Kelas Offline + Holiday'>Kelas Offline + Holiday</option>
+                                                <option value='Paket Liburan (Khusus Member)'>Paket Liburan (Khusus Member)</option>
                                             </select>
                                         </div>
                                     </div>
