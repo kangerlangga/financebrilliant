@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Finance;
 use App\Models\Program;
+use App\Models\Tabungan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,23 +23,35 @@ class AdminController extends Controller
         $now = time(); $fiveMinutesAgo = $now - 300;
 
         if (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User') {
-            // Ambil saldo terakhir dari masing-masing tabungan
-            $saldoKas = Finance::where('tabungan', 'Kas')->latest()->value('saldo_akhir') ?? 0;
-            $saldoBCA = Finance::where('tabungan', 'BCA')->latest()->value('saldo_akhir') ?? 0;
-            $saldoBRI = Finance::where('tabungan', 'BRI')->latest()->value('saldo_akhir') ?? 0;
-            $saldoBNI = Finance::where('tabungan', 'BNI')->latest()->value('saldo_akhir') ?? 0;
-            $saldoMandiri = Finance::where('tabungan', 'Mandiri')->latest()->value('saldo_akhir') ?? 0;
-            
-            // Total saldo semua tabungan
-            $ValueBlueLeft = $saldoKas + $saldoBCA + $saldoBRI + $saldoBNI + $saldoMandiri;
+            $DataTN = Tabungan::where('category_tabungans', 'Non-Bank')->oldest()->get();
+            $DataTB = Tabungan::where('category_tabungans', 'Bank')->oldest()->get();
+
+            $totalSaldoNonBank = 0;
+            $totalSaldoBank = 0;
+
+            // Loop untuk hitung saldo tiap tabungan Non-Bank
+            foreach ($DataTN as $TN) {
+                $saldo = Finance::where('tabungan', $TN->id_tabungans)->latest()->value('saldo_akhir') ?? 0;
+                $totalSaldoNonBank += $saldo;
+            }
+
+            // Loop untuk hitung saldo tiap tabungan Bank
+            foreach ($DataTB as $TB) {
+                $saldo = Finance::where('tabungan', $TB->id_tabungans)->latest()->value('saldo_akhir') ?? 0;
+                $totalSaldoBank += $saldo;
+            }
+
+            // Hitung total saldo semua tabungan
+            $totalSaldoSemua = $totalSaldoNonBank + $totalSaldoBank;
+            $ValueBlueLeft = $totalSaldoSemua;
 
             // Hitung total pengeluaran bulan ini
             $ValueRedLeft = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
-            ->sum('out_debit');
+            ->sum('out_money');
 
             // Hitung total pemasukan bulan ini
             $ValueGreenRight = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
-            ->sum('in_kredit');
+            ->sum('in_money');
         }
 
         $data = [
