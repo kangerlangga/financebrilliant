@@ -42,9 +42,9 @@ class Finance extends Model
     protected $fillable = [
         'id_finances',  
         'tabungan', 
-        'saldo_awal', 
-        'out_debit', 
-        'in_kredit', 
+        'saldo_awal',
+        'in_money', 
+        'out_money',
         'saldo_akhir', 
         'noted', 
         'created_by', 

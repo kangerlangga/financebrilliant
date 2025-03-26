@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Finance;
+use App\Models\Tabungan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -12,47 +13,19 @@ class FinanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function kas_data()
+    public function index()
     {
-        $data = [
-            'judul' => 'Pencatatan Kas (Tanpa Rekening)',
-            'DataTr' => Finance::where('tabungan', 'Kas')->latest()->get(),
-        ];
-        return view('pages.admin.tr_data', $data);
-    }
+        // Ambil semua tabungan
+        $DataTabungan = Tabungan::oldest()->get();
 
-    public function bca_data()
-    {
-        $data = [
-            'judul' => 'Pencatatan Rekening BCA',
-            'DataTr' => Finance::where('tabungan', 'BCA')->latest()->get(),
-        ];
-        return view('pages.admin.tr_data', $data);
-    }
+        // Ambil semua transaksi, diurutkan dari terbaru ke terlama
+        $DataTr = Finance::latest()->get();
 
-    public function bri_data()
-    {
+        // Kirim data ke view
         $data = [
-            'judul' => 'Pencatatan Rekening BRI',
-            'DataTr' => Finance::where('tabungan', 'BRI')->latest()->get(),
-        ];
-        return view('pages.admin.tr_data', $data);
-    }
-
-    public function bni_data()
-    {
-        $data = [
-            'judul' => 'Pencatatan Rekening BNI',
-            'DataTr' => Finance::where('tabungan', 'BNI')->latest()->get(),
-        ];
-        return view('pages.admin.tr_data', $data);
-    }
-
-    public function mandiri_data()
-    {
-        $data = [
-            'judul' => 'Pencatatan Rekening Mandiri',
-            'DataTr' => Finance::where('tabungan', 'Mandiri')->latest()->get(),
+            'judul'        => 'Pencatatan Transaksi',
+            'DataTabungan' => $DataTabungan,
+            'DataTr'       => $DataTr,
         ];
         return view('pages.admin.tr_data', $data);
     }
@@ -64,6 +37,7 @@ class FinanceController extends Controller
     {
         $data = [
             'judul' => 'Catat Transaksi Baru',
+            'DataT' => Tabungan::oldest()->get(),
         ];
         return view('pages.admin.tr_add', $data);
     }
@@ -81,14 +55,14 @@ class FinanceController extends Controller
 
         $latestFinance = Finance::where('tabungan', $request->Tabungan)->latest()->first();
         $saldoAwal = $latestFinance ? $latestFinance->saldo_akhir : 0;
-        $saldoAkhir = ($saldoAwal - $request->Debit) + $request->Kredit;
+        $saldoAkhir = ($saldoAwal - $request->Kredit) + $request->Debit;
 
         Finance::create([
             'id_finances'   => 'FT-'.Str::uuid(),
             'tabungan'      => $request->Tabungan,
             'saldo_awal'    => $saldoAwal,
-            'out_debit'     => $request->Debit,
-            'in_kredit'     => $request->Kredit,
+            'in_money'      => $request->Debit,
+            'out_money'     => $request->Kredit,
             'saldo_akhir'   => $saldoAkhir,
             'noted'         => $request->Keterangan,
             'created_by'    => Auth::user()->email,

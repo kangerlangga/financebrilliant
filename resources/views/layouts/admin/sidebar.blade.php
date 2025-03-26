@@ -74,40 +74,10 @@
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('transaksi*') ? 'active' : '' }}">
-                    <a data-toggle="collapse" href="#transaksi">
+                    <a href="{{ route('trans.data') }}">
                         <i class="fas fa-money-check-alt"></i>
                         <p>Transaksi</p>
-                        <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="transaksi">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('kas.data') }}">
-                                    <span class="sub-item">Kas</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('bca.data') }}">
-                                    <span class="sub-item">Bank BCA</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('bri.data') }}">
-                                    <span class="sub-item">Bank BRI</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('bni.data') }}">
-                                    <span class="sub-item">Bank BNI</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('mandiri.data') }}">
-                                    <span class="sub-item">Bank Mandiri</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item {{ Request::is('transfer*') ? 'active' : '' }}">
                     <a href="{{ route('transfer.data') }}">

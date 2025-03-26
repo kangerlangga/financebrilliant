@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('id_finances')->primary();
             $table->string('tabungan');
             $table->bigInteger('saldo_awal');
-            $table->bigInteger('out_debit');
-            $table->bigInteger('in_kredit');
+            $table->bigInteger('in_money');
+            $table->bigInteger('out_money');
             $table->bigInteger('saldo_akhir');
             $table->string('noted');
             $table->string('created_by');

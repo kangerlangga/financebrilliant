@@ -55,8 +55,8 @@
                                             @foreach ($DataTr as $T)
                                             <tr>
                                                 <td>{{ $T->created_at }}</td>
-                                                <td>{{ $T->tabungan_asal }}</td>
-                                                <td>{{ $T->tabungan_tujuan }}</td>
+                                                <td>{{ $DataTl[$T->tabungan_asal] ?? '-' }}</td>
+                                                <td>{{ $DataTl[$T->tabungan_tujuan] ?? '-' }}</td>
                                                 <td>
                                                     Rp {{ number_format($T->nominal, 0, ',', '.') }} 
                                                     @if ($T->admin > 0)

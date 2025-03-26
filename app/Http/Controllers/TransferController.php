@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Finance;
+use App\Models\Tabungan;
 use App\Models\Transfer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,9 @@ class TransferController extends Controller
     public function index()
     {
         $data = [
-            'judul' => 'Pencatatan Perpindahan Dana',
+            'judul'  => 'Pencatatan Perpindahan Dana',
             'DataTr' => Transfer::latest()->get(),
+            'DataTl' => Tabungan::pluck('nama_tabungans', 'id_tabungans'),
         ];
         return view('pages.admin.transfer', $data);
     }
@@ -30,6 +32,7 @@ class TransferController extends Controller
     {
         $data = [
             'judul' => 'Tambah Perpindahan Dana',
+            'DataT' => Tabungan::oldest()->get(),
         ];
         return view('pages.admin.transfer_add', $data);
     }
@@ -105,10 +108,13 @@ class TransferController extends Controller
             'id_finances'   => 'FT-' . Str::uuid(),
             'tabungan'      => $request->TabunganAsal,
             'saldo_awal'    => $saldoAwal,
-            'out_debit'     => $transfer,
-            'in_kredit'     => 0,
+            'out_money'     => $transfer,
+            'in_money'      => 0,
             'saldo_akhir'   => $saldoAkhir,
-            'noted'         => $request->TabunganAsal.' -> '.$request->TabunganTujuan.' (Uang Keluar) ['.$request->Keterangan.']',
+            'noted'         => Tabungan::where('id_tabungans', $request->TabunganAsal)->value('nama_tabungans') 
+                                . ' -> ' . 
+                                Tabungan::where('id_tabungans', $request->TabunganTujuan)->value('nama_tabungans') 
+                                . ' (Uang Keluar) [' . $request->Keterangan . ']',
             'created_by'    => Auth::user()->email,
             'modified_by'   => Auth::user()->email,
         ]);
@@ -127,10 +133,13 @@ class TransferController extends Controller
             'id_finances'   => 'FT-' . Str::uuid(),
             'tabungan'      => $request->TabunganTujuan,
             'saldo_awal'    => $saldoAwal,
-            'out_debit'     => 0,
-            'in_kredit'     => $request->Nominal,
+            'out_money'     => 0,
+            'in_money'      => $request->Nominal,
             'saldo_akhir'   => $saldoAkhir,
-            'noted'         => $request->TabunganAsal.' -> '.$request->TabunganTujuan.' (Uang Masuk) ['.$request->Keterangan.']',
+            'noted'         => Tabungan::where('id_tabungans', $request->TabunganAsal)->value('nama_tabungans') 
+                                . ' -> ' . 
+                                Tabungan::where('id_tabungans', $request->TabunganTujuan)->value('nama_tabungans') 
+                                . ' (Uang Masuk) [' . $request->Keterangan . ']',
             'created_by'    => Auth::user()->email,
             'modified_by'   => Auth::user()->email,
         ]);

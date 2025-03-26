@@ -49,13 +49,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/periode/update/{id}', [PeriodeController::class, 'update'])->name('periode.update');
         Route::get('/periode/delete/{id}', [PeriodeController::class, 'destroy'])->name('periode.delete');
 
+        Route::get('/transaksi', [FinanceController::class, 'index'])->name('trans.data');
         Route::get('/transaksi/add', [FinanceController::class, 'create'])->name('trans.add');
         Route::post('/transaksi/store', [FinanceController::class, 'store'])->name('trans.store');
-        Route::get('/transaksi/kas', [FinanceController::class, 'kas_data'])->name('kas.data');
-        Route::get('/transaksi/bca', [FinanceController::class, 'bca_data'])->name('bca.data');
-        Route::get('/transaksi/bri', [FinanceController::class, 'bri_data'])->name('bri.data');
-        Route::get('/transaksi/bni', [FinanceController::class, 'bni_data'])->name('bni.data');
-        Route::get('/transaksi/mandiri', [FinanceController::class, 'mandiri_data'])->name('mandiri.data');
 
         Route::get('/transfer', [TransferController::class, 'index'])->name('transfer.data');
         Route::get('/transfer/add', [TransferController::class, 'create'])->name('transfer.add');

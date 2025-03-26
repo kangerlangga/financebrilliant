@@ -38,11 +38,14 @@
                                             <label for="TabunganAsal">Tabungan Asal</label>
                                             <select class="form-control" id="TabunganAsal" name="TabunganAsal" required>
                                                 <option value="" selected disabled>Pilih Tabungan</option>
-                                                <option value='Kas'>Kas (Tanpa Rekening)</option>
-                                                <option value='BCA'>Bank BCA</option>
-                                                <option value='BRI'>Bank BRI</option>
-                                                <option value='BNI'>Bank BNI</option>
-                                                <option value='Mandiri'>Bank Mandiri</option>
+                                                @foreach ($DataT as $T)
+                                                    <option value="{{ $T->id_tabungans }}">
+                                                        {{ $T->nama_tabungans }} 
+                                                        @if ($T->category_tabungans === 'Non-Bank') 
+                                                            (Tanpa Rekening)
+                                                        @endif
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -51,11 +54,14 @@
                                             <label for="TabunganTujuan">Tabungan Tujuan</label>
                                             <select class="form-control" id="TabunganTujuan" name="TabunganTujuan" required>
                                                 <option value="" selected disabled>Pilih Tabungan</option>
-                                                <option value='Kas'>Kas (Tanpa Rekening)</option>
-                                                <option value='BCA'>Bank BCA</option>
-                                                <option value='BRI'>Bank BRI</option>
-                                                <option value='BNI'>Bank BNI</option>
-                                                <option value='Mandiri'>Bank Mandiri</option>
+                                                @foreach ($DataT as $T)
+                                                    <option value="{{ $T->id_tabungans }}">
+                                                        {{ $T->nama_tabungans }} 
+                                                        @if ($T->category_tabungans === 'Non-Bank') 
+                                                            (Tanpa Rekening)
+                                                        @endif
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

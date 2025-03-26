@@ -6,18 +6,24 @@
 
 @section('content')
 <style>
-@media (max-width: 768px) {
-    .page-header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+    .nav-pills .nav-link.active {
+        background-color: #404285 !important;
     }
-    .breadcrumbs {
-        padding-left: 0 !important;
-        margin-left: 0 !important;
+    .card .card-header .card-head-row .card-tools {
+        margin-left: 0;
     }
-}
+    @media (max-width: 768px) {
+        .page-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .breadcrumbs {
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+        }
+    }
 </style>
 <div class="wrapper">
     <div class="main-header">
@@ -36,38 +42,69 @@
                         </a>
                     </ul>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
+    
+                <!-- 🔹 NAVIGATION TABS -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-head-row">
+                            <div class="card-tools">
+                                <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+                                    @foreach ($DataTabungan as $index => $tabungan)
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $index == 0 ? 'active' : '' }}" 
+                                           id="pills-{{ $tabungan->id_tabungans }}-tab"
+                                           data-toggle="pill"
+                                           href="#pills-{{ $tabungan->id_tabungans }}"
+                                           role="tab"
+                                           aria-selected="{{ $index == 0 ? 'true' : 'false' }}">
+                                            {{ $tabungan->nama_tabungans }}
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 🔹 TAB CONTENT -->
+                    <div class="card-body">
+                        <div class="tab-content" id="pills-tabContent">
+                            @foreach ($DataTabungan as $index => $tabungan)
+                            <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" 
+                                 id="pills-{{ $tabungan->id_tabungans }}" 
+                                 role="tabpanel">
                                 <div class="table-responsive">
-                                    <table id="tabel-saldo" class="display table table-striped table-hover" >
+                                    <table class="display table table-striped table-hover" id="tabel-transaksi{{ $tabungan->id_tabungans }}">
                                         <thead>
                                             <tr>
                                                 <th>Waktu</th>
                                                 <th>Keterangan</th>
-                                                <th>Debit (-)</th>
-                                                <th>Kredit (+)</th>
+                                                <th>Debit (+)</th>
+                                                <th>Kredit (-)</th>
                                                 <th>Saldo</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($DataTr as $T)
-                                            <tr>
-                                                <td>{{ $T->created_at }}</td>
-                                                <td>{{ $T->noted }}</td>
-                                                <td>Rp {{ number_format($T->out_debit, 0, ',', '.') }}</td>
-                                                <td>Rp {{ number_format($T->in_kredit, 0, ',', '.') }}</td>
-                                                <td>Rp {{ number_format($T->saldo_akhir, 0, ',', '.') }}</td>
-                                            </tr>
+                                                @if ($T->tabungan == $tabungan->id_tabungans)
+                                                <tr>
+                                                    <td>{{ $T->created_at }}</td>
+                                                    <td>{{ $T->noted }}</td>
+                                                    <td>Rp {{ number_format($T->in_money, 0, ',', '.') }}</td>
+                                                    <td>Rp {{ number_format($T->out_money, 0, ',', '.') }}</td>
+                                                    <td>Rp {{ number_format($T->saldo_akhir, 0, ',', '.') }}</td>
+                                                </tr>
+                                                @endif
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
+    
             </div>
         </div>
         @include('layouts.admin.footer')
@@ -76,14 +113,16 @@
 @include('layouts.admin.script')
 <script>
     $(document).ready(function() {
-        $('#tabel-saldo').DataTable({
-            "order": [[0, "desc"]],
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "type": "date"
-                }
-            ]
+        $('table[id^="tabel-transaksi"]').each(function() {
+            $('#' + this.id).DataTable({
+                "order": [[0, "desc"]],
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "type": "date"
+                    }
+                ]
+            });
         });
     });
 

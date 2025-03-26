@@ -38,17 +38,20 @@
                                             <label for="Tabungan">Tabungan</label>
                                             <select class="form-control" id="Tabungan" name="Tabungan" required>
                                                 <option value="" selected disabled>Pilih Tabungan</option>
-                                                <option value='Kas'>Kas (Tanpa Rekening)</option>
-                                                <option value='BCA'>Bank BCA</option>
-                                                <option value='BRI'>Bank BRI</option>
-                                                <option value='BNI'>Bank BNI</option>
-                                                <option value='Mandiri'>Bank Mandiri</option>
+                                                @foreach ($DataT as $T)
+                                                    <option value="{{ $T->id_tabungans }}">
+                                                        {{ $T->nama_tabungans }} 
+                                                        @if ($T->category_tabungans === 'Non-Bank') 
+                                                            (Tanpa Rekening)
+                                                        @endif
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>                                    
                                     <div class="col-sm-6">
                                         <div class="form-group @error('Debit') has-error has-feedback @enderror">
-                                            <label for="Debit">Debit (Pengeluaran)</label>
+                                            <label for="Debit">Debit (Pemasukan)</label>
                                             <input type="number" id="Debit" name="Debit" value="{{ old('Debit', 0) }}" class="form-control" min="0" placeholder="Masukkan hanya Angka (Contoh : 125000)" required oninput="this.value = this.value.replace(/\D/g, '')">
                                             @error('Debit')
                                             <small id="Debit" class="form-text text-muted">{{ $message }}</small>
@@ -57,7 +60,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group @error('Kredit') has-error has-feedback @enderror">
-                                            <label for="Kredit">Kredit (Pemasukan)</label>
+                                            <label for="Kredit">Kredit (Pengeluaran)</label>
                                             <input type="number" id="Kredit" name="Kredit" value="{{ old('Kredit', 0) }}" class="form-control" min="0" placeholder="Masukkan hanya Angka (Contoh : 125000)" required oninput="this.value = this.value.replace(/\D/g, '')">
                                             @error('Kredit')
                                             <small id="Kredit" class="form-text text-muted">{{ $message }}</small>
@@ -113,7 +116,7 @@
             var saldoAwal = parseInt($("#Saldo-Awal").val().replace(/\./g, "")) || 0;
             var debit = parseInt($("#Debit").val()) || 0;
             var kredit = parseInt($("#Kredit").val()) || 0;
-            var saldoAkhir = saldoAwal - debit + kredit;
+            var saldoAkhir = saldoAwal - kredit + debit;
             $("#Saldo-Akhir").val(new Intl.NumberFormat('id-ID').format(saldoAkhir));
         }
 
