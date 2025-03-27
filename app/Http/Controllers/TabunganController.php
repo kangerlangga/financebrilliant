@@ -116,24 +116,64 @@ class TabunganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tabungan $tabungan)
+    public function edit(string $id)
     {
-        //
+        $data = [
+            'judul' => 'Edit Tabungan',
+            'EditTabungan' => Tabungan::findOrFail($id),
+        ];
+        return view('pages.admin.tabungan_edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tabungan $tabungan)
+    public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'Nama'      => 'required|string|max:255',
+            'status'    => 'required|in:Aktif,Nonaktif',
+            'Rekening'  => 'nullable|regex:/^[0-9\-]+$/|max:50',
+            'Images'    => 'nullable|image|mimes:jpg,jpeg,png|max:3072',
+        ]);
+
+        $tabungan = Tabungan::findOrFail($id);
+
+        if ($request->hasFile('Images')) {
+            $imagePath = public_path('assets/admin/img/Tabungan/' . $tabungan->logo_tabungans);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+            $image = $request->file('Images');
+            $imageName = time() . Str::random(17) . '.' . $image->getClientOriginalExtension();
+            $image->move('assets/admin/img/Tabungan', $imageName);
+        } else {
+            $imageName = $tabungan->logo_tabungans;
+        }
+
+        $tabungan->update([
+            'nama_tabungans'        => $request->Nama,
+            'rekening_tabungans'    => $request->Rekening,
+            'logo_tabungans'        => $imageName,
+            'status_tabungans'      => $request->status,
+            'modified_by'           => Auth::user()->email,
+        ]);
+
+        return redirect()->route('tabungan.data')->with(['success' => 'Tabungan telah Diperbarui!']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tabungan $tabungan)
+    public function destroy(string $id)
     {
-        //
+        $tabungan = Tabungan::findOrFail($id);
+        $imagePath = public_path('assets/admin/img/Tabungan/' . $tabungan->logo_tabungans);
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        $tabungan->delete();
+
+        return redirect()->route('tabungan.data')->with(['success' => 'Tabungan telah Dihapus!']);
     }
 }

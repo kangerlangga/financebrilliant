@@ -37,7 +37,7 @@ class FinanceController extends Controller
     {
         $data = [
             'judul' => 'Catat Transaksi Baru',
-            'DataT' => Tabungan::oldest()->get(),
+            'DataT' => Tabungan::where('status_tabungans', 'Aktif')->oldest()->get(),
         ];
         return view('pages.admin.tr_add', $data);
     }

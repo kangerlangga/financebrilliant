@@ -32,7 +32,7 @@ class TransferController extends Controller
     {
         $data = [
             'judul' => 'Tambah Perpindahan Dana',
-            'DataT' => Tabungan::oldest()->get(),
+            'DataT' => Tabungan::where('status_tabungans', 'Aktif')->oldest()->get(),
         ];
         return view('pages.admin.transfer_add', $data);
     }
