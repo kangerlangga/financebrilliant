@@ -5,6 +5,7 @@ use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PublikController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TabunganController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
@@ -66,6 +67,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/tabungan/edit/{id}', [TabunganController::class, 'edit'])->name('tabungan.edit');
         Route::post('/tabungan/update/{id}', [TabunganController::class, 'update'])->name('tabungan.update');
         Route::get('/tabungan/delete/{id}', [TabunganController::class, 'destroy'])->name('tabungan.delete');
+
+        Route::get('/report/harian', [ReportController::class, 'harian'])->name('report.harian');
+        Route::post('/report/harian', [ReportController::class, 'harian']);
     });
 
     // Route::get('/saldo', [FinanceController::class, 'index'])->name('saldo.data');

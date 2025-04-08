@@ -94,7 +94,7 @@
                     <div class="collapse" id="report">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ route('coming.publik') }}">
+                                <a href="{{ route('report.harian') }}">
                                     <span class="sub-item">Harian</span>
                                 </a>
                             </li>

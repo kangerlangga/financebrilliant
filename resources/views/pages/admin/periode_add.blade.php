@@ -27,7 +27,7 @@
                     <h4 class="page-title">{{ $judul }}</h4>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                             <form method="POST" action="{{ route('periode.store') }}" enctype="multipart/form-data">
@@ -45,9 +45,12 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div class="form-group">
+                                        <div class="form-group @error('DateP') has-error has-feedback @enderror">
                                             <label for="DateP">Tanggal</label>
                                             <input type="date" class="form-control" id="DateP" name="DateP" min="{{ date('Y-m-d') }}" required>
+                                            @error('DateP')
+                                            <small id="DateP" class="form-text text-muted">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
