@@ -100,11 +100,6 @@
                             </li>
                             <li>
                                 <a href="{{ route('coming.publik') }}">
-                                    <span class="sub-item">Mingguan</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('coming.publik') }}">
                                     <span class="sub-item">Bulanan</span>
                                 </a>
                             </li>

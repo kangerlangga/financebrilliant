@@ -36,7 +36,7 @@
                 <div class="page-header">
                     <h4 class="page-title">{{ $judul }}</h4>
                     <ul class="breadcrumbs">
-                        <a href="{{ route('trans.add') }}" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
+                        <a href="{{ route('trans.add', ['rek' => $DataTabungan[0]->id_tabungans]) }}" id="btnTambahTransaksi" class="btn btn-round text-white ml-auto fw-bold" style="background-color: #404285">
                             <i class="fa fa-plus-circle mr-1"></i>
                             Catat Transaksi
                         </a>
@@ -55,6 +55,7 @@
                                            id="pills-{{ $tabungan->id_tabungans }}-tab"
                                            data-toggle="pill"
                                            href="#pills-{{ $tabungan->id_tabungans }}"
+                                           data-id="{{ $tabungan->id_tabungans }}"
                                            role="tab"
                                            aria-selected="{{ $index == 0 ? 'true' : 'false' }}">
                                             {{ $tabungan->nama_tabungans }}
@@ -77,7 +78,7 @@
                                     <table class="display table table-striped table-hover" id="tabel-transaksi{{ $tabungan->id_tabungans }}">
                                         <thead>
                                             <tr>
-                                                <th>Waktu</th>
+                                                <th>Tanggal</th>
                                                 <th>Keterangan</th>
                                                 <th>Debit (+)</th>
                                                 <th>Kredit (-)</th>
@@ -88,7 +89,7 @@
                                             @foreach ($DataTr as $T)
                                                 @if ($T->tabungan == $tabungan->id_tabungans)
                                                 <tr>
-                                                    <td>{{ $T->created_at }}</td>
+                                                    <td>{{ $T->tanggal }}</td>
                                                     <td>{{ $T->noted }}</td>
                                                     <td>Rp {{ number_format($T->in_money, 0, ',', '.') }}</td>
                                                     <td>Rp {{ number_format($T->out_money, 0, ',', '.') }}</td>
@@ -122,6 +123,18 @@
                         "type": "date"
                     }
                 ]
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const navLinks = document.querySelectorAll('.nav-link[data-id]');
+        const btnTambah = document.getElementById('btnTambahTransaksi');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                const idTabungan = this.getAttribute('data-id');
+                const baseUrl = "{{ route('trans.add') }}";
+                btnTambah.setAttribute('href', `${baseUrl}?rek=${idTabungan}`);
             });
         });
     });

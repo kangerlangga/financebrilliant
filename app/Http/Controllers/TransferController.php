@@ -107,6 +107,7 @@ class TransferController extends Controller
         Finance::create([
             'id_finances'   => 'FT-' . Str::uuid(),
             'tabungan'      => $request->TabunganAsal,
+            'tanggal'       => now()->toDateString(),
             'saldo_awal'    => $saldoAwal,
             'out_money'     => $transfer,
             'in_money'      => 0,
@@ -132,6 +133,7 @@ class TransferController extends Controller
         Finance::create([
             'id_finances'   => 'FT-' . Str::uuid(),
             'tabungan'      => $request->TabunganTujuan,
+            'tanggal'       => now()->toDateString(),
             'saldo_awal'    => $saldoAwal,
             'out_money'     => 0,
             'in_money'      => $request->Nominal,

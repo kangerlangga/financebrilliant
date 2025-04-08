@@ -19,7 +19,7 @@ class FinanceController extends Controller
         $DataTabungan = Tabungan::oldest()->get();
 
         // Ambil semua transaksi, diurutkan dari terbaru ke terlama
-        $DataTr = Finance::latest()->get();
+        $DataTr = Finance::orderBy('tanggal', 'desc')->orderBy('created_at', 'desc')->get();
 
         // Kirim data ke view
         $data = [
@@ -51,6 +51,7 @@ class FinanceController extends Controller
             'Keterangan'=> 'required|max:255',
             'Debit'     => 'required|numeric|min:0',
             'Kredit'    => 'required|numeric|min:0',
+            'Tanggal'   => 'required|date|before_or_equal:today',
         ]);
 
         $latestFinance = Finance::where('tabungan', $request->Tabungan)->latest()->first();
@@ -60,6 +61,7 @@ class FinanceController extends Controller
         Finance::create([
             'id_finances'   => 'FT-'.Str::uuid(),
             'tabungan'      => $request->Tabungan,
+            'tanggal'       => $request->Tanggal ?? now()->toDateString(),
             'saldo_awal'    => $saldoAwal,
             'in_money'      => $request->Debit,
             'out_money'     => $request->Kredit,

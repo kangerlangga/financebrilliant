@@ -33,22 +33,29 @@
                             <form method="POST" id="transaksi-add" action="{{ route('trans.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="Tabungan">Tabungan</label>
                                             <select class="form-control" id="Tabungan" name="Tabungan" required>
-                                                <option value="" selected disabled>Pilih Tabungan</option>
+                                                <option value="" disabled {{ request('rek') ? '' : 'selected' }}>Pilih Tabungan</option>
                                                 @foreach ($DataT as $T)
-                                                    <option value="{{ $T->id_tabungans }}">
-                                                        {{ $T->nama_tabungans }} 
+                                                    <option value="{{ $T->id_tabungans }}"
+                                                        {{ request('rek') == $T->id_tabungans ? 'selected' : '' }}>
+                                                        {{ $T->nama_tabungans }}
                                                         @if ($T->category_tabungans === 'Non-Bank') 
                                                             (Tanpa Rekening)
                                                         @endif
                                                     </option>
                                                 @endforeach
-                                            </select>
+                                            </select>                                            
                                         </div>
-                                    </div>                                    
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group @error('Tanggal') has-error has-feedback @enderror">
+                                            <label for="Tanggal">Tanggal</label>
+                                            <input type="date" id="Tanggal" name="Tanggal" value="{{ date('Y-m-d') }}" class="form-control" max="{{ date('Y-m-d') }}" readonly style="cursor: not-allowed">
+                                        </div>
+                                    </div>
                                     <div class="col-sm-6">
                                         <div class="form-group @error('Debit') has-error has-feedback @enderror">
                                             <label for="Debit">Debit (Pemasukan)</label>
@@ -140,6 +147,11 @@
         $("#Debit, #Kredit, #Tabungan").on("input change", function () {
             hitungSaldoAkhir();
         });
+
+        var tabunganAwal = $("#Tabungan").val();
+        if (tabunganAwal) {
+            $("#Tabungan").trigger("change");
+        }
     });
 
     document.getElementById("btn-simpan").addEventListener("click", function() {

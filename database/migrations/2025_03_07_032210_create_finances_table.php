@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('finances', function (Blueprint $table) {
             $table->string('id_finances')->primary();
             $table->string('tabungan');
+            $table->date('tanggal');
             $table->bigInteger('saldo_awal');
             $table->bigInteger('in_money');
             $table->bigInteger('out_money');
