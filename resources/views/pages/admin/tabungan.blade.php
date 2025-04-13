@@ -56,7 +56,7 @@
                                             <a href="{{ route('tabungan.edit', $TN->id_tabungans) }}" class="text-white">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            @if ($jSt[$TN->id_tabungans] == 0)
+                                            @if ($jSt[$TN->id_tabungans] == 0 && $TN->status_tabungans == 'Nonaktif')
                                             <a href="{{ route('tabungan.delete', $TN->id_tabungans) }}" class="text-white ml-3 but-delete">
                                                 <i class="fa fa-trash"></i>
                                             </a>

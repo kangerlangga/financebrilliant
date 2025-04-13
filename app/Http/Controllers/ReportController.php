@@ -23,10 +23,9 @@ class ReportController extends Controller
                 'DateR' => 'required|date|before_or_equal:today',
             ]);
             $tanggal = $request->DateR;
-            $DataTr = Finance::whereDate('tanggal', $tanggal)
-                ->orderBy('tanggal', 'desc')
+            $DataTr = $DataTr = Finance::whereDate('created_at', $tanggal)
                 ->orderBy('created_at', 'desc')
-                ->get();
+                ->get();        
             if ($DataTr->isEmpty()) {
                 return redirect()->route('report.harian')->with(['error' => 'Data Tidak Ditemukan!']);
             }

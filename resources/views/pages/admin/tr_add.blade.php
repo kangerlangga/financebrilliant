@@ -33,7 +33,7 @@
                             <form method="POST" id="transaksi-add" action="{{ route('trans.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <label for="Tabungan">Tabungan</label>
                                             <select class="form-control" id="Tabungan" name="Tabungan" required>
@@ -48,12 +48,6 @@
                                                     </option>
                                                 @endforeach
                                             </select>                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group @error('Tanggal') has-error has-feedback @enderror">
-                                            <label for="Tanggal">Tanggal</label>
-                                            <input type="date" id="Tanggal" name="Tanggal" value="{{ date('Y-m-d') }}" class="form-control" max="{{ date('Y-m-d') }}" readonly style="cursor: not-allowed">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">

@@ -78,7 +78,7 @@
                                     <table class="display table table-striped table-hover" id="tabel-transaksi{{ $tabungan->id_tabungans }}">
                                         <thead>
                                             <tr>
-                                                <th>Tanggal</th>
+                                                <th>Waktu</th>
                                                 <th>Keterangan</th>
                                                 <th>Debit (+)</th>
                                                 <th>Kredit (-)</th>
@@ -89,7 +89,7 @@
                                             @foreach ($DataTr as $T)
                                                 @if ($T->tabungan == $tabungan->id_tabungans)
                                                 <tr>
-                                                    <td>{{ $T->tanggal }}</td>
+                                                    <td>{{ $T->created_at }}</td>
                                                     <td>{{ $T->noted }}</td>
                                                     <td>Rp {{ number_format($T->in_money, 0, ',', '.') }}</td>
                                                     <td>Rp {{ number_format($T->out_money, 0, ',', '.') }}</td>

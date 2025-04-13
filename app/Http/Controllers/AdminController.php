@@ -46,11 +46,11 @@ class AdminController extends Controller
             $ValueBlueLeft = $totalSaldoSemua;
 
             // Hitung total pengeluaran bulan ini
-            $ValueRedLeft = Finance::whereMonth('tanggal', date('m'))->whereYear('tanggal', date('Y'))
+            $ValueRedLeft = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
             ->sum('out_money');
 
             // Hitung total pemasukan bulan ini
-            $ValueGreenRight = Finance::whereMonth('tanggal', date('m'))->whereYear('tanggal', date('Y'))
+            $ValueGreenRight = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
             ->sum('in_money');
         }
 
