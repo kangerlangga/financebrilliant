@@ -86,6 +86,89 @@
                     </div>
                     @elseif (isset($DataTr) && count($DataTr) > 0)
                     {{-- Hasil Laporan --}}
+                    <div class="col-sm-6 col-md-6">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-danger bubble-shadow-small">
+                                            <i class="fas fa-upload"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ml-3 ml-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Total Pengeluaran ({{ $tanggalFormatted }})</p>
+                                            <h4 class="card-title">Rp {{ number_format($OutM, 0, ',', '.') }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-success bubble-shadow-small">
+                                            <i class="fas fa-download"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ml-3 ml-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Total Pemasukan ({{ $tanggalFormatted }})</p>
+                                            <h4 class="card-title">Rp {{ number_format($InM, 0, ',', '.') }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Grafik Pengeluaran --}}
+                    @if (collect($dataKeluar)->every(fn($v) => (int) $v > 0))
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Grafik Pengeluaran 7 Hari Sebelumnya</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="keluarChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                    {{-- Grafik Pemasukan --}}
+                    @if (collect($dataMasuk)->every(fn($v) => (int) $v > 0))
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Grafik Pemasukan 7 Hari Sebelumnya</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="masukChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                    {{-- Grafik Saldo --}}
+                    @if (collect($dataSaldo)->every(fn($v) => (int) $v > 0))
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Grafik Saldo 7 Hari Sebelumnya</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="saldoChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
@@ -187,6 +270,86 @@
         });
     @endif
 </script>
+@if (isset($DataTr) && count($DataTr) > 0)
+{{-- Khusus Grafik --}}
+<script>
+    var keluarChart = document.getElementById('keluarChart').getContext('2d');
+    var masukChart = document.getElementById('masukChart').getContext('2d');
+    var saldoChart = document.getElementById('saldoChart').getContext('2d');
+
+    var myKeluarChart = new Chart(keluarChart, {
+        type: 'bar',
+        data: {
+            labels: @json($labels7), // Mengambil label 7 hari
+            datasets: [{
+                label: "Pengeluaran",
+                backgroundColor: '#f25961',
+                borderColor: '#f25961',
+                data: @json($dataKeluar), // Mengambil data pengeluaran
+            }]
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var myMasukChart = new Chart(masukChart, {
+        type: 'bar',
+        data: {
+            labels: @json($labels7), // Mengambil label 7 hari
+            datasets: [{
+                label: "Pemasukan",
+                backgroundColor: '#31ce36',
+                borderColor: '#31ce36',
+                data: @json($dataMasuk), // Mengambil data pemasukan
+            }]
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var mySaldoChart = new Chart(saldoChart, {
+        type: 'bar',
+        data: {
+            labels: @json($labels7), // Mengambil label 7 hari
+            datasets: [{
+                label: "Saldo",
+                backgroundColor: '#404285',
+                borderColor: '#404285',
+                data: @json($dataSaldo), // Mengambil data saldo
+            }]
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+@endif
 @endsection
 
 <body>

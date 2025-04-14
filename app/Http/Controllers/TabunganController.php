@@ -168,12 +168,19 @@ class TabunganController extends Controller
     public function destroy(string $id)
     {
         $tabungan = Tabungan::findOrFail($id);
-        $imagePath = public_path('assets/admin/img/Tabungan/' . $tabungan->logo_tabungans);
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
-        }
-        $tabungan->delete();
+        $saldo = Finance::where('tabungan', $tabungan->id_tabungans)->latest()->value('saldo_akhir') ?? 0;
 
-        return redirect()->route('tabungan.data')->with(['success' => 'Tabungan telah Dihapus!']);
+        if ($tabungan->status_tabungans == 'Nonaktif' && $saldo == 0) {
+            $imagePath = public_path('assets/admin/img/Tabungan/' . $tabungan->logo_tabungans);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+            $tabungan->delete();
+            return redirect()->route('tabungan.data')->with(['success' => 'Tabungan telah Dihapus!']);
+        }elseif ($saldo != 0) {
+            return redirect()->route('tabungan.data')->with(['error' => 'Tabungan masih terdapat Saldo!']);
+        }elseif ($tabungan->status_tabungans != 'Nonaktif') {
+            return redirect()->route('tabungan.data')->with(['error' => 'Tabungan masih berstatus Aktif!']);
+        }
     }
 }

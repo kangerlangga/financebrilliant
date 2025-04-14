@@ -6,6 +6,7 @@ use App\Models\Finance;
 use App\Models\Program;
 use App\Models\Tabungan;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,15 +53,85 @@ class AdminController extends Controller
             // Hitung total pemasukan bulan ini
             $ValueGreenRight = Finance::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
             ->sum('in_money');
+
+            // 6 bulan terakhir untuk pemasukan dan pengeluaran
+            $periode6 = collect();
+            for ($i = 5; $i >= 0; $i--) {
+                $date = now()->subMonths($i);
+                $periode6->push($date->format('Y-m'));
+            }
+
+            // 12 bulan terakhir untuk saldo
+            $periode12 = collect();
+            for ($i = 11; $i >= 0; $i--) {
+                $date = now()->subMonths($i);
+                $periode12->push($date->format('Y-m'));
+            }
+
+            // Ambil pemasukan & pengeluaran
+            $keluar = Finance::select(
+                DB::raw("DATE_FORMAT(created_at, '%Y-%m') as periode"),
+                DB::raw('SUM(out_money) as total_keluar')
+            )
+            ->where('created_at', '>=', now()->subMonths(5)->startOfMonth())
+            ->groupBy('periode')
+            ->pluck('total_keluar', 'periode');
+
+            $masuk = Finance::select(
+                DB::raw("DATE_FORMAT(created_at, '%Y-%m') as periode"),
+                DB::raw('SUM(in_money) as total_masuk')
+            )
+            ->where('created_at', '>=', now()->subMonths(5)->startOfMonth())
+            ->groupBy('periode')
+            ->pluck('total_masuk', 'periode');
+
+            $saldo = [];
+            foreach ($periode12 as $periode) {
+                $totalSaldoBulan = 0;
+                foreach ($DataTN as $TN) {
+                    $saldoTabungan = Finance::where('tabungan', $TN->id_tabungans)
+                        ->whereYear('created_at', substr($periode, 0, 4))
+                        ->whereMonth('created_at', substr($periode, 5, 2))
+                        ->latest()
+                        ->value('saldo_akhir') ?? 0;
+                    $totalSaldoBulan += $saldoTabungan;
+                }
+                foreach ($DataTB as $TB) {
+                    $saldoTabungan = Finance::where('tabungan', $TB->id_tabungans)
+                        ->whereYear('created_at', substr($periode, 0, 4))
+                        ->whereMonth('created_at', substr($periode, 5, 2))
+                        ->latest()
+                        ->value('saldo_akhir') ?? 0;
+                    $totalSaldoBulan += $saldoTabungan;
+                }
+                $saldo[$periode] = $totalSaldoBulan;
+            }
+
+            // Format label bulan
+            $monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            $labels6 = $periode6->map(function ($p) use ($monthNames) {
+                $date = Carbon::createFromFormat('Y-m', $p);
+                return $monthNames[$date->month - 1] . ' ' . $date->format('y');
+            });
+            
+            $labels12 = $periode12->map(function ($p) use ($monthNames) {
+                $date = Carbon::createFromFormat('Y-m', $p);
+                return $monthNames[$date->month - 1] . ' ' . $date->format('y');
+            });            
+
+            $data['labels6']     = $labels6;
+            $data['labels12']    = $labels12;
+            $data['dataKeluar']  = $periode6->map(fn($p) => $keluar[$p] ?? 0);
+            $data['dataMasuk']   = $periode6->map(fn($p) => $masuk[$p] ?? 0);
+            $data['dataSaldo']   = $periode12->map(fn($p) => $saldo[$p] ?? 0);
         }
 
-        $data = [
-            'judul' => 'Dashboard',
-            'vBl'   => $ValueBlueLeft,
-            'vRl'   => $ValueRedLeft,
-            'vGr'   => $ValueGreenRight,
-            'cVO'   => DB::table('sessions')->where('last_activity', '>=', $fiveMinutesAgo)->count(),
-        ];
+        $data['judul'] = 'Dashboard';
+        $data['vBl']   = $ValueBlueLeft;
+        $data['vRl']   = $ValueRedLeft;
+        $data['vGr']   = $ValueGreenRight;
+        $data['cVO']   = DB::table('sessions')->where('last_activity', '>=', $fiveMinutesAgo)->count();
+
         return view('pages.admin.dashboard', $data);
     }
 

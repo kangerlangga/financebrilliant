@@ -147,6 +147,8 @@
                         </div>
                     </div>
                     @if (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
+                    {{-- Grafik Pengeluaran --}}
+                    @if(count($dataKeluar) === 6 && collect($dataKeluar)->every(fn($v) => $v > 0))
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
@@ -159,6 +161,9 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+                    {{-- Grafik Pemasukan --}}
+                    @if(count($dataMasuk) === 6 && collect($dataMasuk)->every(fn($v) => $v > 0))
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
@@ -171,6 +176,9 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+                    {{-- Grafik Saldo --}}
+                    @if(count($dataSaldo) === 12 && collect($dataSaldo)->every(fn($v) => $v > 0))
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
@@ -183,6 +191,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     @endif
                     @if (Auth::user()->level == 'Super-User')
                     <div class="col-md-4">
@@ -252,117 +261,58 @@
 @include('layouts.admin.script')
 @if (Auth::user()->level == 'Finance' || Auth::user()->level == 'Super-User')
 <script>
-    var keluarChart = document.getElementById('keluarChart').getContext('2d'),
-    masukChart = document.getElementById('masukChart').getContext('2d'),
-    saldoChart = document.getElementById('saldoChart').getContext('2d');
-    // var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
+    const keluarChart = document.getElementById('keluarChart').getContext('2d'),
+          masukChart = document.getElementById('masukChart').getContext('2d'),
+          saldoChart = document.getElementById('saldoChart').getContext('2d');
 
-    // var mytotalIncomeChart = new Chart(totalIncomeChart, {
-    //     type: 'bar',
-    //     data: {
-    //         labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
-    //         datasets : [{
-    //             label: "Total Income",
-    //             backgroundColor: '#ff9e27',
-    //             borderColor: 'rgb(23, 125, 255)',
-    //             data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
-    //         }],
-    //     },
-    //     options: {
-    //         responsive: true,
-    //         maintainAspectRatio: false,
-    //         legend: {
-    //             display: false,
-    //         },
-    //         scales: {
-    //             yAxes: [{
-    //                 ticks: {
-    //                     display: false //this will remove only the label
-    //                 },
-    //                 gridLines : {
-    //                     drawBorder: false,
-    //                     display : false
-    //                 }
-    //             }],
-    //             xAxes : [ {
-    //                 gridLines : {
-    //                     drawBorder: false,
-    //                     display : false
-    //                 }
-    //             }]
-    //         },
-    //     }
-    // });
-
-    var myKeluarChart = new Chart(keluarChart, {
+    new Chart(keluarChart, {
         type: 'bar',
         data: {
-            labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            labels: @json($labels6),
             datasets: [{
                 label: "Pengeluaran",
                 backgroundColor: '#f25961',
-                borderColor: '#f25961',
-                data: [4, 6, 7, 8, 7, 4],
+                data: @json($dataKeluar),
             }],
         },
         options: {
-            responsive: true, 
+            responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            },
+            scales: { y: { beginAtZero: true } }
         }
     });
 
-    var myMasukChart = new Chart(masukChart, {
+    new Chart(masukChart, {
         type: 'bar',
         data: {
-            labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            labels: @json($labels6),
             datasets: [{
                 label: "Pemasukan",
                 backgroundColor: '#31ce36',
-                borderColor: '#31ce36',
-                data: [4, 6, 7, 8, 7, 4],
+                data: @json($dataMasuk),
             }],
         },
         options: {
-            responsive: true, 
+            responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            },
+            scales: { y: { beginAtZero: true } }
         }
     });
 
-    var mySaldoChart = new Chart(saldoChart, {
+    new Chart(saldoChart, {
         type: 'bar',
         data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            labels: @json($labels12),
             datasets: [{
                 label: "Saldo",
                 backgroundColor: '#404285',
-                borderColor: '#404285',
-                data: [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4],
+                data: @json($dataSaldo),
             }],
         },
         options: {
-            responsive: true, 
+            responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            },
+            scales: { y: { beginAtZero: true } }
         }
     });
 </script>
