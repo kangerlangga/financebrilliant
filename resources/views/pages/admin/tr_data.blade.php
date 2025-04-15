@@ -54,6 +54,7 @@
                                            id="pills-semua-tab"
                                            data-toggle="pill"
                                            href="#pills-semua"
+                                           data-id="semua"
                                            role="tab"
                                            aria-selected="true">
                                             Semua
@@ -65,6 +66,7 @@
                                         id="pills-{{ $tabungan->id_tabungans }}-tab"
                                         data-toggle="pill"
                                         href="#pills-{{ $tabungan->id_tabungans }}"
+                                        data-id="{{ $tabungan->id_tabungans }}"
                                         role="tab"
                                         aria-selected="false">
                                             {{ $tabungan->nama_tabungans }}
@@ -167,11 +169,28 @@
     document.addEventListener('DOMContentLoaded', function () {
         const navLinks = document.querySelectorAll('.nav-link[data-id]');
         const btnTambah = document.getElementById('btnTambahTransaksi');
+        const baseUrl = "{{ route('trans.add') }}";
+
+        function updateButtonUrl(idTabungan) {
+            if (idTabungan === 'semua') {
+                btnTambah.setAttribute('href', baseUrl); // Tanpa parameter
+            } else {
+                btnTambah.setAttribute('href', `${baseUrl}?rek=${idTabungan}`);
+            }
+        }
+
+        // 🔹 Set tombol saat halaman pertama dimuat
+        const activeLink = document.querySelector('.nav-link.active[data-id]');
+        if (activeLink) {
+            const activeId = activeLink.getAttribute('data-id');
+            updateButtonUrl(activeId);
+        }
+
+        // 🔹 Update tombol saat tab diklik
         navLinks.forEach(link => {
             link.addEventListener('click', function () {
                 const idTabungan = this.getAttribute('data-id');
-                const baseUrl = "{{ route('trans.add') }}";
-                btnTambah.setAttribute('href', `${baseUrl}?rek=${idTabungan}`);
+                updateButtonUrl(idTabungan);
             });
         });
     });
