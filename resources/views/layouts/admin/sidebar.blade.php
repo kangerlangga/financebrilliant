@@ -99,12 +99,12 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('coming.publik') }}">
+                                <a href="{{ route('report.bulanan') }}">
                                     <span class="sub-item">Bulanan</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('coming.publik') }}">
+                                <a href="{{ route('report.tahunan') }}">
                                     <span class="sub-item">Tahunan</span>
                                 </a>
                             </li>

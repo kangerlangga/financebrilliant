@@ -70,6 +70,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/report/harian', [ReportController::class, 'harian'])->name('report.harian');
         Route::post('/report/harian', [ReportController::class, 'harian']);
+        Route::get('/report/bulanan', [ReportController::class, 'bulanan'])->name('report.bulanan');
+        Route::post('/report/bulanan', [ReportController::class, 'bulanan']);
+        Route::get('/report/tahunan', [ReportController::class, 'tahunan'])->name('report.tahunan');
+        Route::post('/report/tahunan', [ReportController::class, 'tahunan']);
     });
 
     // Route::get('/saldo', [FinanceController::class, 'index'])->name('saldo.data');
