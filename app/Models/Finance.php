@@ -50,4 +50,9 @@ class Finance extends Model
         'created_by', 
         'modified_by'
     ];
+
+    public function tabunganRelasi() {
+        return $this->belongsTo(Tabungan::class, 'tabungan', 'id_tabungans');
+    }
+    
 }

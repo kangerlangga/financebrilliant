@@ -19,7 +19,7 @@ class FinanceController extends Controller
         $DataTabungan = Tabungan::oldest()->get();
 
         // Ambil semua transaksi, diurutkan dari terbaru ke terlama
-        $DataTr = Finance::latest()->get();
+        $DataTr = Finance::with('tabunganRelasi')->latest()->get();
 
         // Kirim data ke view
         $data = [

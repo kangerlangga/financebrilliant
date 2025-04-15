@@ -28,9 +28,8 @@ class ReportController extends Controller
             $tanggal = $request->DateR;
             $tanggalCarbon = \Carbon\Carbon::parse($tanggal);
 
-            $DataTr = Finance::whereDate('created_at', $tanggal)
-                ->orderBy('created_at', 'desc')
-                ->get();
+            $DataTr = Finance::with('tabunganRelasi')->whereDate('created_at', $tanggal)
+                ->orderBy('created_at', 'desc')->get();
 
             if ($DataTr->isEmpty()) {
                 return redirect()->route('report.harian')->with(['error' => 'Data Tidak Ditemukan!']);

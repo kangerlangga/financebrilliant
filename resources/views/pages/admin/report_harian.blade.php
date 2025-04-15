@@ -5,17 +5,6 @@
 </head>
 
 @section('content')
-@php
-    use Carbon\Carbon;
-    $months = [
-        'January' => 'Januari', 'February' => 'Februari', 'March' => 'Maret',
-        'April' => 'April', 'May' => 'Mei', 'June' => 'Juni',
-        'July' => 'Juli', 'August' => 'Agustus', 'September' => 'September',
-        'October' => 'Oktober', 'November' => 'November', 'December' => 'Desember'
-    ];
-    $currentMonth = $months[Carbon::now()->format('F')];
-    $currentYear = Carbon::now()->format('Y');
-@endphp
 <style>
     .nav-pills .nav-link.active {
         background-color: #404285 !important;
@@ -176,15 +165,24 @@
                                     <div class="card-title">Laporan {{ $tanggalFormatted }}</div>
                                     <div class="card-tools">
                                         <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
-                                            @foreach ($DataTabungan as $index => $tabungan)
                                             <li class="nav-item">
-                                                <a class="nav-link {{ $index == 0 ? 'active' : '' }}" 
+                                                <a class="nav-link active" 
+                                                   id="pills-semua-tab"
+                                                   data-toggle="pill"
+                                                   href="#pills-semua"
+                                                   role="tab"
+                                                   aria-selected="true">
+                                                    Semua
+                                                </a>
+                                            </li>                                    
+                                            @foreach ($DataTabungan as $tabungan)
+                                            <li class="nav-item">
+                                                <a class="nav-link {{ $loop->first ? '' : '' }}" 
                                                 id="pills-{{ $tabungan->id_tabungans }}-tab"
                                                 data-toggle="pill"
                                                 href="#pills-{{ $tabungan->id_tabungans }}"
-                                                data-id="{{ $tabungan->id_tabungans }}"
                                                 role="tab"
-                                                aria-selected="{{ $index == 0 ? 'true' : 'false' }}">
+                                                aria-selected="false">
                                                     {{ $tabungan->nama_tabungans }}
                                                 </a>
                                             </li>
@@ -195,8 +193,36 @@
                             </div>
                             <div class="card-body">
                                 <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-semua" role="tabpanel">
+                                        <div class="table-responsive">
+                                            <table class="display table table-striped table-hover" id="tabel-laporan-semua">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Waktu</th>
+                                                        <th>Tabungan</th>
+                                                        <th>Keterangan</th>
+                                                        <th>Debit (+)</th>
+                                                        <th>Kredit (-)</th>
+                                                        <th>Saldo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($DataTr as $T)
+                                                    <tr>
+                                                        <td>{{ $T->created_at }}</td>
+                                                        <td>{{ $T->tabunganRelasi->nama_tabungans ?? $T->tabungan }}</td>
+                                                        <td>{{ $T->noted }}</td>
+                                                        <td>Rp {{ number_format($T->in_money, 0, ',', '.') }}</td>
+                                                        <td>Rp {{ number_format($T->out_money, 0, ',', '.') }}</td>
+                                                        <td>Rp {{ number_format($T->saldo_akhir, 0, ',', '.') }}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>                            
                                     @foreach ($DataTabungan as $index => $tabungan)
-                                    <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" 
+                                    <div class="tab-pane fade"
                                         id="pills-{{ $tabungan->id_tabungans }}" 
                                         role="tabpanel">
                                         <div class="table-responsive">
