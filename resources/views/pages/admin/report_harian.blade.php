@@ -303,12 +303,12 @@
     var myKeluarChart = new Chart(keluarChart, {
         type: 'bar',
         data: {
-            labels: @json($labels7), // Mengambil label 7 hari
+            labels: @json($labels7),
             datasets: [{
                 label: "Pengeluaran",
                 backgroundColor: '#f25961',
                 borderColor: '#f25961',
-                data: @json($dataKeluar), // Mengambil data pengeluaran
+                data: @json($dataKeluar),
             }]
         },
         options: {
@@ -329,7 +329,7 @@
     var myMasukChart = new Chart(masukChart, {
         type: 'bar',
         data: {
-            labels: @json($labels7), // Mengambil label 7 hari
+            labels: @json($labels7),
             datasets: [{
                 label: "Pemasukan",
                 backgroundColor: '#31ce36',
@@ -355,12 +355,12 @@
     var mySaldoChart = new Chart(saldoChart, {
         type: 'bar',
         data: {
-            labels: @json($labels7), // Mengambil label 7 hari
+            labels: @json($labels7),
             datasets: [{
                 label: "Saldo",
                 backgroundColor: '#404285',
                 borderColor: '#404285',
-                data: @json($dataSaldo), // Mengambil data saldo
+                data: @json($dataSaldo),
             }]
         },
         options: {
