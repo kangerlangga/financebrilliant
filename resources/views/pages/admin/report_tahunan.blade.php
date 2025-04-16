@@ -303,14 +303,14 @@
         });
     @endif
 </script>
-@if (isset($DataTr) && count($DataTr) > 0)
 {{-- Khusus Grafik --}}
 <script>
+    @if (isset($dataKeluar) && collect($dataKeluar)->every(fn($v) => (int) $v > 0))
     var keluarChart = document.getElementById('keluarChart').getContext('2d');
     var myKeluarChart = new Chart(keluarChart, {
         type: 'bar',
         data: {
-            labels: @json($labels5),
+            labels: @json($labels5), // 5 tahun terakhir
             datasets: [{
                 label: "Pengeluaran",
                 backgroundColor: '#f25961',
@@ -330,7 +330,9 @@
             }
         }
     });
+    @endif
 
+    @if (isset($dataMasuk) && collect($dataMasuk)->every(fn($v) => (int) $v > 0))
     var masukChart = document.getElementById('masukChart').getContext('2d');
     var myMasukChart = new Chart(masukChart, {
         type: 'bar',
@@ -355,7 +357,9 @@
             }
         }
     });
-    
+    @endif
+
+    @if (isset($dataSaldo) && collect($dataSaldo)->every(fn($v) => (int) $v > 0))
     var saldoChart = document.getElementById('saldoChart').getContext('2d');
     var mySaldoChart = new Chart(saldoChart, {
         type: 'bar',
@@ -380,8 +384,8 @@
             }
         }
     });
+    @endif
 </script>
-@endif
 @endsection
 
 <body>
