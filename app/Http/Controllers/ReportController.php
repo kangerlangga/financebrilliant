@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Finance;
 use App\Models\Tabungan;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +26,7 @@ class ReportController extends Controller
             ]);
 
             $tanggal = $request->DateR;
-            $tanggalCarbon = \Carbon\Carbon::parse($tanggal);
+            $tanggalCarbon = Carbon::parse($tanggal);
 
             $DataTr = Finance::with('tabunganRelasi')->whereDate('created_at', $tanggal)
                 ->orderBy('created_at', 'desc')->get();
